@@ -66,6 +66,10 @@ GameController.prototype.executeGameActionsPerFrame = function() {
         word.updatePosition();
     }
 
+    // Remove words that have fallen to the bottom
+    let canvasHeight = this.gameCanvas.getHeight();
+    this.words = this.words.filter(word => word.y < canvasHeight);
+
     // Redraw all the words
     this.gameCanvas.draw(this.words);
 }

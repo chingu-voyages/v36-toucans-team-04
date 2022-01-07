@@ -3,7 +3,7 @@
  * its operations.
  * 
  * @param {string} text the actual text of this word in string
- * @param {*} font controls the font size and font family of this word. 20px serif by default
+ * @param {*} font controls the font size and font family of this word. 30px Arial by default
  * @param {*} color color of this word - white by default
  * @param {*} speed speed at which this word falls down - 2.0 by default
  * @param {*} x the x-position of this word at the current time - 0 by default
@@ -11,7 +11,7 @@
  * @param {*} dx the distance at which the word moves horizontally every frame. For now, we keep this at 1 - 0 by default
  * @param {*} dy the distance at which the word moves vertically every frame. For now, we keep this at 1 - 1 by default
  */
-function Word(text, font = "20px serif", color = "#FFFFFF", speed = 2.0, x = 0, y = 0, dx = 0, dy = 1) {
+function Word(text, font = "30px Arial", color = "#FFFFFF", speed = 2.0, x = 0, y = 0, dx = 0, dy = 1) {
     this.text = text; // Text string
     this.color = color; // Text color
     this.font = font; // Text font (Includes both the size and font family)

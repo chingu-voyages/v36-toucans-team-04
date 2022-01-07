@@ -55,6 +55,14 @@ GameCanvas.prototype.getWidth = function() {
 }
 
 /**
+ * Function that returns the height of the game canvas
+ * @returns {number} Height of the Canvas 
+ */
+GameCanvas.prototype.getHeight = function() {
+    return this.canvas.height;
+}
+
+/**
  * Private function that returns the canvas context. The context contains functions to render drawings on the canvas.
  * @returns {*} Canvas Context
  */
