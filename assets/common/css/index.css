@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Bungee&family=Press+Start+2P&display=swap');
+
+body {
+    background: #2B2826;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+
+header {
+    font-size: 4em;
+    font-family: 'Press Start 2P', cursive;
+    color: white;
+    -webkit-text-fill-color: white;
+    -webkit-background-clip: text;
+    background-clip: text;
+    margin: 1em;
+}
+
+main ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+main ul li {
+    margin: 0.5em;
+}
+
+main ul li a {
+    text-decoration: none;
+}
+
+main ul li, main ul li a {
+    color: white;
+}
+
+.menu-item {
+    font-family: 'Bungee', cursive;
+    font-size: 3em;
+    width: 400px;
+    text-align: center;
+    border: 2px white solid;
+    border-radius: 100px;
+    padding: 0.3em 0.5em;
+    margin: 10px;
+}
+
+.menu-item:hover {
+    border: 5px white solid;
+    margin: 5px;
+}
+
+footer {
+    font-family: Arial;
+    bottom: 0;
+    position: fixed;
+    color: white;
+    align-self: flex-end;
+}
+
+.animate-slidein-left-right {
+    position: relative;
+    animation-duration: 1s;
+    animation-name: slidein-left-right;
+}
+
+@keyframes slidein-left-right {
+    from {
+        position: relative;
+        left: -600px;
+    }
+
+    to {
+        position: relative;
+        left: 0px;
+    }
+}
+
+.animate-slidein-right-left {
+    position: relative;
+    animation-duration: 1s;
+    animation-name: slidein-right-left;
+}
+
+@keyframes slidein-right-left {
+    from {
+        position: relative;
+        right: -600px;
+    }
+
+    to {
+        position: relative;
+        right: 0px;
+    }
+}
