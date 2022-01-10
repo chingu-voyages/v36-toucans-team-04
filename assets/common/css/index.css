@@ -1,18 +1,18 @@
-@import url('https://fonts.googleapis.com/css2?family=Bungee&family=Press+Start+2P&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bungee&family=Righteous&display=swap');
 
 body {
-    background: #2B2826;
+    background: radial-gradient(#afe1af, #50c878);
     display: flex;
     flex-direction: column;
     align-items: center;
-    
+    height: 100vh;
 }
 
 header {
-    font-size: 4em;
-    font-family: 'Press Start 2P', cursive;
-    color: white;
-    -webkit-text-fill-color: white;
+    font-size: 6em;
+    font-family: 'Righteous', cursive;
+    -webkit-text-fill-color: #caa472;
+    -webkit-text-stroke: 5px #815438;
     -webkit-background-clip: text;
     background-clip: text;
     margin: 1em;
@@ -26,22 +26,18 @@ main ul {
 
 main ul li {
     margin: 0.5em;
-}
-
-main ul li a {
-    text-decoration: none;
-}
-
-main ul li, main ul li a {
-    color: white;
+    border: 1px solid #caa472;
+    background-color: #caa472;
+    border-radius: 100px;
 }
 
 .menu-item {
     font-family: 'Bungee', cursive;
     font-size: 3em;
+    color: #815438;
     width: 400px;
     text-align: center;
-    border: 2px white solid;
+    border: 5px #815438 solid;
     border-radius: 100px;
     padding: 0.3em 0.5em;
     margin: 10px;
@@ -49,27 +45,26 @@ main ul li, main ul li a {
 
 .menu-item:hover {
     border: 5px white solid;
-    margin: 5px;
+    color: white;
 }
 
 footer {
     font-family: Arial;
     bottom: 0;
     position: fixed;
-    color: white;
+    color: #815438;
     align-self: flex-end;
 }
 
-.animate-slidein-left-right {
-    position: relative;
+.animate-slidein-right {
     animation-duration: 1s;
-    animation-name: slidein-left-right;
+    animation-name: slidein-right;
 }
 
-@keyframes slidein-left-right {
+@keyframes slidein-right {
     from {
         position: relative;
-        left: -600px;
+        left: -1600px;
     }
 
     to {
@@ -78,20 +73,53 @@ footer {
     }
 }
 
-.animate-slidein-right-left {
-    position: relative;
+.animate-slidein-left {
     animation-duration: 1s;
-    animation-name: slidein-right-left;
+    animation-name: slidein-left;
 }
 
-@keyframes slidein-right-left {
+@keyframes slidein-left {
     from {
         position: relative;
-        right: -600px;
+        right: -1600px;
     }
 
     to {
         position: relative;
         right: 0px;
+    }
+}
+
+.animate-slideout-left {
+    animation-duration: 1s;
+    animation-name: slideout-left;
+}
+
+@keyframes slideout-left {
+    from {
+        position: relative;
+        left: 0px;
+    }
+
+    to {
+        position: relative;
+        left: -1600px;
+    }
+}
+
+.animate-slideout-right {
+    animation-duration: 1s;
+    animation-name: slideout-right;
+}
+
+@keyframes slideout-right {
+    from {
+        position: relative;
+        right: 0px;
+    }
+
+    to {
+        position: relative;
+        right: -1600px;
     }
 }
