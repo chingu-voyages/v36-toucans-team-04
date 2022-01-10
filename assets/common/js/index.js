@@ -1,6 +1,6 @@
 // Create a mouse click sound
 let sound = new Howl({
-    src: ["./assets/audio/mixkit-select-click-1109.wav"]
+    src: ["assets/audio/mixkit-select-click-1109.wav"]
 });
 
 // Animate the header and menu items upon document loading
