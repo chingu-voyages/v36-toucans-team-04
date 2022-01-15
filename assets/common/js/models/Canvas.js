@@ -32,7 +32,7 @@ GameCanvas.prototype.clear = function() {
  * Function that draws words on the board
  * @param {*} words Array of Word objects
  */
- GameCanvas.prototype.draw = function(words) {
+ GameCanvas.prototype.draw = function(words, numOfLives, score, inputText, timeElapsed) {
     let ctx = this.get2DContext();
 
     // First clear the canvas before rendering the next frame
@@ -41,8 +41,8 @@ GameCanvas.prototype.clear = function() {
     // Iterate each word and draw it on the canvas
     for(word of words) {
         ctx.font = word.font;
-        ctx.strokeStyle = word.color;
-        ctx.strokeText(word.text, word.x, word.y);
+        ctx.fillStyle = word.color;
+        ctx.fillText(word.text, word.x, word.y);
     }
 }
 

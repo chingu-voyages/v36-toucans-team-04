@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Bungee&family=Righteous&display=swap');
 
+:root {
+    --dark-wood-color: #815438;
+    --light-wood-color: #caa472;
+}
+
 body {
     background: radial-gradient(#afe1af, #50c878);
     display: flex;
@@ -11,8 +16,8 @@ body {
 header {
     font-size: 6em;
     font-family: 'Righteous', cursive;
-    -webkit-text-fill-color: #caa472;
-    -webkit-text-stroke: 5px #815438;
+    -webkit-text-fill-color: var(--light-wood-color);
+    -webkit-text-stroke: 5px var(--dark-wood-color);
     -webkit-background-clip: text;
     background-clip: text;
     margin: 1em;
@@ -22,22 +27,24 @@ main ul {
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 0;
+    margin: 0;
 }
 
 main ul li {
     margin: 0.5em;
-    border: 1px solid #caa472;
-    background-color: #caa472;
+    background-color: var(--light-wood-color);
     border-radius: 100px;
+    list-style-type: none;
 }
 
 .menu-item {
     font-family: 'Bungee', cursive;
     font-size: 3em;
-    color: #815438;
+    color: var(--dark-wood-color);
     width: 400px;
     text-align: center;
-    border: 5px #815438 solid;
+    border: 5px var(--dark-wood-color) solid;
     border-radius: 100px;
     padding: 0.3em 0.5em;
     margin: 10px;
@@ -52,6 +59,6 @@ footer {
     font-family: Arial;
     bottom: 0;
     position: fixed;
-    color: #815438;
+    color: var(--dark-wood-color);
     align-self: flex-end;
 }

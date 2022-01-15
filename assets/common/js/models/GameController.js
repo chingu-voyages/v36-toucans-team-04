@@ -51,7 +51,7 @@ GameController.prototype.addWord = function() {
     let wordText = this.dictionary.getRandomWord();
 
     // Instantiate a word object
-    let wordObj = new Word(wordText, undefined, undefined, this.speed, x);
+    let wordObj = new Word(wordText, this.speed, x);
 
     // Add a new word object to the words array
     this.words.push(wordObj);
