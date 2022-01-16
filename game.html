@@ -11,13 +11,6 @@
 	<link rel="stylesheet" href="assets/common/css/game.css">
 </head>
 <body>
-	<header>
-		<button id="btn-start-stop">Start!</button><span id="word"></span>
-		<label>Speed: <input id="speed" type="number" value="2" min="1" max="10"></label>
-		<label>WPM: <input id="wpm" type="number" value="30" min="20" max="500"></label>
-	</header>
-	
-	<!-- This is a throwaway example to test the random word functionality -->
 	<main>
 		<canvas id="game-canvas">
 			Your browser does not support canvas.
@@ -27,6 +20,8 @@
 	<script src="assets/common/js/models/Dictionary.js"></script>
 	<script src="assets/common/js/models/Word.js"></script>
 	<script src="assets/common/js/models/Canvas.js"></script>
+	<script src="assets/common/js/models/Player.js"></script>
+	<script src="assets/common/js/models/Timer.js"></script>
 	<script src="assets/common/js/models/GameController.js"></script>
 	<script src="assets/common/js/game.js"></script>
 </body>
