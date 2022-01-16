@@ -26,6 +26,9 @@ This Javascript game was created for the Chingu Voyage 36. Our team wants to pro
 | Fun Facts about Typing                                   | Work In Progress |
 | Credits Screen                                           | Work In Progress |
 
+## Running the Project
+This project does not have a backend server. To run this project locally, download it as a ZIP, unzip the project folder and open index.html.
+
 ## Languages
 * HTML
 * CSS
