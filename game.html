@@ -8,15 +8,24 @@
 	<title>Falling Words!</title>
 
 	<link rel="stylesheet" href="assets/common/css/reset.css">
+	<link rel="stylesheet" href="assets/lib/animate.css-4.1.1/css/animate.min.css">
+	<link rel="stylesheet" href="assets/lib/fontawesome-5.15.4/css/all.min.css">
 	<link rel="stylesheet" href="assets/common/css/game.css">
 </head>
 <body>
 	<main>
-		<canvas id="game-canvas">
+		<nav id="nav-bar">
+			<i class="fas fa-arrow-left"></i>
+		</nav>
+		<canvas id="canvas">
 			Your browser does not support canvas.
 		</canvas>
+		<div id="text-display-container">
+			<label id="text-display"></label>
+		</div>
 	</main>
 	
+	<script src="assets/lib/jquery-3.6.0/js/jquery-3.6.0.min.js"></script>
 	<script src="assets/common/js/models/Dictionary.js"></script>
 	<script src="assets/common/js/models/Word.js"></script>
 	<script src="assets/common/js/models/Canvas.js"></script>
