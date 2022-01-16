@@ -80,6 +80,12 @@ GameController.prototype.executeFrameActions = function() {
  */
 GameController.prototype.generateWord = function() {
     const text = this.dictionary.getRandomWord();
-    const x = Math.floor(Math.random() * (this.canvas.getWidth() - 800) + 400);
+    const textWidth = this.canvas.get2DContext().measureText(text).width;
+
+    // Give left and right padding to prevent words from overlaping with UI components
+    const min = 300; // Give left padding of 300
+    const max = this.canvas.getWidth() - 300 - textWidth; // Give 300 default right padding + width of the word
+
+    const x = Math.floor(Math.random() * (max - min) + min);
     this.words.push(new Word(text, x));
 }
