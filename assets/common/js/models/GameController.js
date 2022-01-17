@@ -110,4 +110,27 @@ GameController.prototype.generateWord = function() {
     }
 
     this.numWordsSpawned ++;
+    this.updateTextBox(); // Updates the text box when a new word is added
+}
+
+GameController.prototype.updateTextBox = function() {
+    console.log("current text :" + this.userInputText);
+    let maxIndex = -1;
+    for (word of this.words) {
+        let currentIndex = -1;
+        for (i in word.text) {
+            if (word.text[i] == this.userInputText[i]) {
+                currentIndex++;
+            }
+        }
+        maxIndex = Math.max(maxIndex, currentIndex);
+    }
+    console.log("max index: " + maxIndex);
+    let correctlyTyped = "<span class=\"correctly-typed\">" + this.userInputText.substr(0, maxIndex+1) + "</span>";
+    let incorrectlyTyped = "<span class=\"incorrectly-typed\">" + this.userInputText.substr(maxIndex+1, this.userInputText.length - 1) + "</span>";
+    let innerHTML = correctlyTyped + incorrectlyTyped;
+    if (maxIndex == -1) {
+        innerHTML = "<span class=\"incorrectly-typed\">" + this.userInputText + "</span>";
+    }
+    $("#text-display").html(innerHTML); // Update the User Input Display
 }
