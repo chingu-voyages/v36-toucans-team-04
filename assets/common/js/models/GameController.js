@@ -45,13 +45,20 @@ GameController.prototype.stop = function() {
  * Validate the current value of userInputText.
  */
 GameController.prototype.enterWord = function() {
-
+    if (this.words.includes(this.userInputText)) ; // Word typed correctly
+    else { // Word failed to be typed
+    }
+    this.userInputText = "";
 }
 
 GameController.prototype.enterCharacter = function(charCode) {
     // This is a backspace
-    if(charCode === 8) ;// Remove the last character in userInputText
-    else ; // Push the input character to userInputText
+    if(charCode === 8) { // Remove the last character in userInputText
+        this.userInputText = this.userInputText.slice(0, -1);
+    }
+    else { // Push the input character to userInputText
+        this.userInputText += String.fromCharCode(charCode);
+    }
 }
 
 /**
