@@ -113,23 +113,24 @@ GameController.prototype.generateWord = function() {
     this.updateTextBox(); // Updates the text box when a new word is added
 }
 
+/**
+ * Updates the TypeBox's innerHTML  
+ */
 GameController.prototype.updateTextBox = function() {
-    console.log("current text :" + this.userInputText);
-    let maxIndex = -1;
+    let maxPrefixIndex = -1; // Index indicating the end of the matching prefix with the maximum length between words displayed and user input
     for (word of this.words) {
-        let currentIndex = -1;
-        for (i in word.text) {
-            if (word.text[i] == this.userInputText[i]) {
-                currentIndex++;
+        let currentPrefixIndex = -1; // Index indicating the end of the matching prefix of the current word with user input
+        for (i in word.text) { // Iterating through each char
+            if (word.text[i] == this.userInputText[i]) { // Check if the char in the i-th of both strings position matches
+                currentPrefixIndex++;
             }
         }
-        maxIndex = Math.max(maxIndex, currentIndex);
+        maxPrefixIndex = Math.max(maxPrefixIndex, currentPrefixIndex); // Get the maximum value between current maximum and current prefix length
     }
-    console.log("max index: " + maxIndex);
-    let correctlyTyped = "<span class=\"correctly-typed\">" + this.userInputText.substr(0, maxIndex+1) + "</span>";
-    let incorrectlyTyped = "<span class=\"incorrectly-typed\">" + this.userInputText.substr(maxIndex+1, this.userInputText.length - 1) + "</span>";
-    let innerHTML = correctlyTyped + incorrectlyTyped;
-    if (maxIndex == -1) {
+    let prefix = "<span class=\"correctly-typed\">" + this.userInputText.substr(0, maxPrefixIndex+1) + "</span>";
+    let suffix = "<span class=\"incorrectly-typed\">" + this.userInputText.substr(maxPrefixIndex+1, this.userInputText.length - 1) + "</span>";
+    let innerHTML = prefix + suffix;
+    if (maxPrefixIndex == -1) {
         innerHTML = "<span class=\"incorrectly-typed\">" + this.userInputText + "</span>";
     }
     $("#text-display").html(innerHTML); // Update the User Input Display
