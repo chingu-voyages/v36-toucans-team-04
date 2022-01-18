@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Mochiy+Pop+P+One&family=Permanent+Marker&display=swap');
+
 :root {
 	--main-backgroundColor: rgb(21, 110, 34);
 	--main-textColor: white;
@@ -8,8 +10,8 @@ body {
 	color: var(--main-textColor);
 }
 
-nav {
-	background-color: var(--main-backgroundColor);
+.navbar-brand {
+	font-family: 'Permanent Marker', cursive;
 }
 
 .navbar-brand, .nav-link {
@@ -21,6 +23,7 @@ nav {
 }
 
 #header {
+	font-family: 'Mochiy Pop P One', sans-serif;
 	text-align: center;
 	margin: 2em 0;
 }
@@ -30,15 +33,14 @@ nav {
 }
 
 .jumbotron .btn {
-	background: white;
-	color: var(--main-backgroundColor);
+	background: rgb(66, 135, 245);
 	border: none;
+	text-transform: uppercase;
 	font-weight: bold;
 }
 
 .jumbotron .btn:hover {
-	background: rgb(52, 101, 235);
-	color: white;
+	background: #008CBA;
 }
 
 img {
@@ -47,9 +49,11 @@ img {
 }
 
 footer {
+	width: 100%;
 	position: fixed;
 	bottom: 0;
-	right: 1em;
+	text-align: center;
+	padding: 0.5em;
 }
 
 @media screen and (max-width: 900px) {
