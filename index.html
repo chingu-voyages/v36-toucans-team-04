@@ -5,28 +5,53 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-	<title>Falling Words!</title>
+	<title>Falling Words Game</title>
 
 	<link rel="stylesheet" href="assets/common/css/reset.css">
 	<link rel="stylesheet" href="assets/lib/animate.css-4.1.1/css/animate.min.css">
+	<link rel="stylesheet" href="assets/lib/bootstrap-4.6.1/css/bootstrap.min.css">
 	<link rel="stylesheet" href="assets/common/css/index.css">
 </head>
 <body>
-	<header>Falling Words!</header>
-	<main>
-		<ul>
-			<li><div class="menu-item" data-href="game.html">Start Game</div></li>
-			<li><div class="menu-item" data-href="tutorial.html">Tutorial</div></li>
-			<li><div class="menu-item" data-href="trivia.html">Fun Facts</div></li>
-			<li><div class="menu-item" data-href="credits.html">Credits</div></li>
-		</ul>
+	<nav class="navbar navbar-expand-lg navbar-dark">
+		<a class="navbar-brand" href="https://github.com/chingu-voyages/v36-toucans-team-04">Falling Words!</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+			aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+			<ul class="navbar-nav">
+				<li class="nav-item">
+					<a class="nav-link" href="tutorial.html">Tutorial</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="trivia.html">Fun Facts</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="credits.html">Credits</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+	<main class="container">
+		<h1 id="header" class="display-4">Falling Words Game</h1>
+		<div class="row">
+			<div class="col">
+				<div class="jumbotron">
+					<h1>Challenge Your Typing Speed</h1>
+					<p class="lead">Type the words before they hit the bottom!</p>
+					<hr class="my-4">
+					<p>Let's jump right in!</p>
+					<a class="btn btn-primary btn-lg" href="game.html" role="button">Start Game</a>
+				</div>
+			</div>
+			<img src="assets/images/undraw_typewriter.svg" class="img-fluid" alt="Typewriter Image">
+		</div>
 	</main>
-	<footer>
-		<span>&copy; V36 Toucans Team 04</span>
-	</footer>
+	<footer>&copy; V36 Toucans Team 04</footer>
 
-	<script src="assets/lib/howler.js-2.2.3/js/howler.min.js"></script>
 	<script src="assets/lib/jquery-3.6.0/js/jquery-3.6.0.min.js"></script>
+	<script src="assets/lib/bootstrap-4.6.1/js/bootstrap.bundle.min.js"></script>
 	<script src="assets/common/js/index.js"></script>
 </body>
 </html>

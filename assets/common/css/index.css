@@ -1,64 +1,63 @@
-@import url('https://fonts.googleapis.com/css2?family=Bungee&family=Righteous&display=swap');
-
 :root {
-    --dark-wood-color: #815438;
-    --light-wood-color: #caa472;
+	--main-backgroundColor: rgb(21, 110, 34);
+	--main-textColor: white;
 }
 
 body {
-    background: radial-gradient(#afe1af, #50c878);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 100vh;
+	background-color: var(--main-backgroundColor);
+	color: var(--main-textColor);
 }
 
-header {
-    font-size: 6em;
-    font-family: 'Righteous', cursive;
-    -webkit-text-fill-color: var(--light-wood-color);
-    -webkit-text-stroke: 5px var(--dark-wood-color);
-    -webkit-background-clip: text;
-    background-clip: text;
-    margin: 1em;
+nav {
+	background-color: var(--main-backgroundColor);
 }
 
-main ul {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 0;
-    margin: 0;
+.navbar-brand, .nav-link {
+	color: var(--main-textColor) !important;
 }
 
-main ul li {
-    margin: 0.5em;
-    background-color: var(--light-wood-color);
-    border-radius: 100px;
-    list-style-type: none;
+.nav-link:hover {
+	font-weight: bold;
 }
 
-.menu-item {
-    font-family: 'Bungee', cursive;
-    font-size: 3em;
-    color: var(--dark-wood-color);
-    width: 400px;
-    text-align: center;
-    border: 5px var(--dark-wood-color) solid;
-    border-radius: 100px;
-    padding: 0.3em 0.5em;
-    margin: 10px;
+#header {
+	text-align: center;
+	margin: 2em 0;
 }
 
-.menu-item:hover {
-    border: 5px white solid;
-    color: white;
+.jumbotron {
+	background: var(--main-backgroundColor);
+}
+
+.jumbotron .btn {
+	background: white;
+	color: var(--main-backgroundColor);
+	border: none;
+	font-weight: bold;
+}
+
+.jumbotron .btn:hover {
+	background: rgb(52, 101, 235);
+	color: white;
+}
+
+img {
+	width: 40%;
+	height: 40%;
 }
 
 footer {
-    font-family: Arial;
-    bottom: 0;
-    position: fixed;
-    color: var(--dark-wood-color);
-    align-self: flex-end;
+	position: fixed;
+	bottom: 0;
+	right: 1em;
+}
+
+@media screen and (max-width: 900px) {
+	img {
+		display: none;
+	}
+
+	#header {
+		margin: 1em 0;
+	}
 }
