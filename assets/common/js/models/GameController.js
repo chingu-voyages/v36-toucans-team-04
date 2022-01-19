@@ -74,6 +74,10 @@ GameController.prototype.executeFrameActions = function() {
         else word.y += this.speed;
     }
 
+
+    // If the player lives is zero, end the game
+    if(this.player.lives == 0) this.stop();
+
     // Draw on the canvas
     this.canvas.draw(this.words, this.player.score, this.player.lives, this.getPlayerWPM(), this.difficulty);
 }
