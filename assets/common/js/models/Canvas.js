@@ -17,10 +17,7 @@ function Canvas() {
  */
 Canvas.prototype.draw = function(words, score, lives, wpm, difficulty) {
     this.clear();
-    const ctx = this.get2DContext();
-
-    const rightPadding = 250;
-    const heartDimension = 40;
+    const ctx = this.get2DContext(), rightPadding = 250, heartDimension = 40;
 
     ctx.fillStyle = "red";
     ctx.font = "2em Arial";
@@ -34,8 +31,7 @@ Canvas.prototype.draw = function(words, score, lives, wpm, difficulty) {
     // Draw WPM - 2 Decimal Places
     ctx.fillText("WPM: " + wpm.toFixed(2), this.element.width - rightPadding, 75);
     
-    let heartYPos = 125;
-    let heartXPos = this.element.width - rightPadding;
+    let heartYPos = 125, heartXPos = this.element.width - rightPadding;
 
     // Draw the lives
     for(let i = 0; i < lives; i++) {
@@ -50,6 +46,8 @@ Canvas.prototype.draw = function(words, score, lives, wpm, difficulty) {
 
     // Draw the words on the screen
     for(word of words) {
+        let defaultTextColor = word.isBonus ? "blue" : "white";
+
         // Highlight the substring if the word is highlighted
         if(word.highlightInd > 0) {
             const prefix = word.text.substring(0, word.highlightInd);
@@ -59,12 +57,12 @@ Canvas.prototype.draw = function(words, score, lives, wpm, difficulty) {
             ctx.fillStyle = "yellow";
             ctx.fillText(prefix, word.x, word.y);
 
-            ctx.fillStyle = "white";
+            ctx.fillStyle = defaultTextColor;
             ctx.fillText(suffix, word.x + prefixWidth, word.y);
         } 
         // No highlighting required
         else {
-            ctx.fillStyle = "white";
+            ctx.fillStyle = defaultTextColor;
             ctx.fillText(word.text, word.x, word.y);
         }
     }
