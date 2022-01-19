@@ -80,16 +80,13 @@ GameController.prototype.executeFrameActions = function() {
  * Search words for text that matches the userInputText and updates highlightInd accordingly. To be called with every keyboard input (in enterCharacter).
  */
 GameController.prototype.updateHighlightInd = function() {
-	highlightSearch = new RegExp('^' + this.userInputText)
+	highlightSearch = new RegExp('^' + this.userInputText) // A regex that searches for strings starting with userInputText
 	for (word of this.words) {
 		if (word.text.search(highlightSearch) !== -1) {
-			word.highlightInd = this.userInputText.length
+			word.highlightInd = this.userInputText.length // If there is a match among words.text, set that word's highlight index to userInputText.length
 		} else {
-			word.highlightInd = 0
+			word.highlightInd = 0 // Reset highlight index if there is no longer a match (i.e. word highlight search narrows)
 		}
-		console.log(`User Input Text: ${this.userInputText}`)
-		console.log(`Word text: ${word.text}`)
-		console.log(`Word highlight index: ${word.highlightInd}`)
 	}
 }
 
