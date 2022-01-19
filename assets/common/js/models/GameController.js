@@ -52,6 +52,8 @@ GameController.prototype.enterCharacter = function(charCode) {
     // This is a backspace
     if(charCode === 8) ;// Remove the last character in userInputText
     else ; // Push the input character to userInputText
+
+	this.updateHighlightInd()
 }
 
 /**
@@ -70,9 +72,25 @@ GameController.prototype.executeFrameActions = function() {
         word.y += this.speed;
     }
 
-
     // Draw on the canvas
     this.canvas.draw(this.words, this.player.score, this.player.lives, this.getPlayerWPM(), this.difficulty);
+}
+
+/*
+ * Search words for text that matches the userInputText and updates highlightInd accordingly. To be called with every keyboard input (in enterCharacter).
+ */
+GameController.prototype.updateHighlightInd = function() {
+	highlightSearch = new RegExp('^' + this.userInputText)
+	for (word of this.words) {
+		if (word.text.search(highlightSearch) !== -1) {
+			word.highlightInd = this.userInputText.length
+		} else {
+			word.highlightInd = 0
+		}
+		console.log(`User Input Text: ${this.userInputText}`)
+		console.log(`Word text: ${word.text}`)
+		console.log(`Word highlight index: ${word.highlightInd}`)
+	}
 }
 
 /**
