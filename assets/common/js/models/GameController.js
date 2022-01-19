@@ -13,6 +13,8 @@ function GameController() {
 
     this.wordGenerationIntervalId = null;
     this.frameIntervalId = null;
+
+    this.numWordsSpawned = 0;
 }
 
 /**
@@ -76,9 +78,14 @@ GameController.prototype.getPlayerWPM = function() {
 GameController.prototype.executeFrameActions = function() {
     // Move all the words down
     for(word of this.words) {
-        word.y += this.speed;
+        // Bonus word moves down quicker than normal words
+        if(word.isBonus) word.y += this.speed + 1;
+        else word.y += this.speed;
     }
 
+
+    // If the player lives is zero, end the game
+    if(this.player.lives == 0) this.stop();
 
     // Draw on the canvas
     this.canvas.draw(this.words, this.player.score, this.player.lives, this.getPlayerWPM(), this.difficulty);
@@ -96,5 +103,13 @@ GameController.prototype.generateWord = function() {
     const max = this.canvas.getWidth() - 300 - textWidth; // Give 300 default right padding + width of the word
 
     const x = Math.floor(Math.random() * (max - min) + min);
-    this.words.push(new Word(text, x));
+
+    // Every 100th word is a bonus word
+    if(this.numWordsSpawned % 100 == 0 && this.numWordsSpawned > 0) {
+        this.words.push(new Word(text, x, true));
+    } else {
+        this.words.push(new Word(text, x));
+    }
+
+    this.numWordsSpawned ++;
 }
