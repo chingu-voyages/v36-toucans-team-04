@@ -1,5 +1,29 @@
 body {
+    width: 99vw;
+    height: 100vh;
     background: rgb(50,50,50);
-    width: 100%;
-    height: 80vh;
+}
+
+#nav-bar{
+    padding: 10px;
+    display: inline-block;
+}
+
+.fa-arrow-left {
+    font-size: 30px;
+    color: white;
+}
+
+#text-display-container {
+    border-top: white 1px solid;
+    display: flex;
+    flex-direction: auto;
+    justify-content: center;
+    height: 50px;
+}
+
+#text-display {
+    color: white;
+    font-size: 2.5em;
+    font-family: "Arial";
 }

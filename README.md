@@ -10,8 +10,6 @@ A fun and interactive way to improve your typing skill!
 
 This Javascript game was created for the Chingu Voyage 36. Our team wants to provide a game in which players can improve their typing skill. We are designing this game to cater to players at different skill levels. Whether you are a beginner typist or an experienced typist, we will make sure that you are challenged! The main goal of this game is to type the words that are falling from the top before they reach the bottom. The difficulty level will increase as you progress through the game. At the end of the game, you can review your performance through comprehensive feedback.
 
->Live Link: [https://chingu-voyages.github.io/v36-toucans-team-04/](https://chingu-voyages.github.io/v36-toucans-team-04/)
-
 ## Features
 | Key Feature                                              | Status           |
 | -------------------------------------------------------- | ---------------- |
@@ -25,6 +23,14 @@ This Javascript game was created for the Chingu Voyage 36. Our team wants to pro
 | GameOver screen with player's performance details        | Work In Progress |
 | Fun Facts about Typing                                   | Work In Progress |
 | Credits Screen                                           | Work In Progress |
+
+## Running the Project
+This project does not have a backend server. To run this project locally, download it as a ZIP, unzip the project folder and open index.html.
+1. Download the project as a zip.
+2. Unzip the project directory and cd into the project directory.
+3. Open index.html.
+
+>Live Link: [https://chingu-voyages.github.io/v36-toucans-team-04/](https://chingu-voyages.github.io/v36-toucans-team-04/)
 
 ## Languages
 * HTML
