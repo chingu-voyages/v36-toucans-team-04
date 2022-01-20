@@ -47,7 +47,8 @@ GameController.prototype.stop = function() {
  * Validate the current value of userInputText.
  */
 GameController.prototype.enterWord = function() {
-    if (this.words.includes(this.userInputText)) ; // Word typed correctly
+    const wordsAsStrings = this.words.map((word) => word.text ); // Maps Word objects to strings
+    if (wordsAsStrings.includes(this.userInputText)) ; // Word typed correctly
     else { // Word failed to be typed
     }
     this.userInputText = "";
