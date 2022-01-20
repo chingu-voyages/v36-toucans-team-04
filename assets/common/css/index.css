@@ -1,67 +1,64 @@
-@import url('https://fonts.googleapis.com/css2?family=Mochiy+Pop+P+One&family=Permanent+Marker&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bungee&family=Righteous&display=swap');
 
 :root {
-	--main-backgroundColor: rgb(21, 110, 34);
-	--main-textColor: white;
+    --dark-wood-color: #815438;
+    --light-wood-color: #caa472;
 }
 
 body {
-	background-color: var(--main-backgroundColor);
-	color: var(--main-textColor);
+    background: radial-gradient(#afe1af, #50c878);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
 }
 
-.navbar-brand {
-	font-family: 'Permanent Marker', cursive;
+header {
+    font-size: 6em;
+    font-family: 'Righteous', cursive;
+    -webkit-text-fill-color: var(--light-wood-color);
+    -webkit-text-stroke: 5px var(--dark-wood-color);
+    -webkit-background-clip: text;
+    background-clip: text;
+    margin: 1em;
 }
 
-.navbar-brand, .nav-link {
-	color: var(--main-textColor) !important;
+main ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+    margin: 0;
 }
 
-.nav-link:hover {
-	font-weight: bold;
+main ul li {
+    margin: 0.5em;
+    background-color: var(--light-wood-color);
+    border-radius: 100px;
+    list-style-type: none;
 }
 
-#header {
-	font-family: 'Mochiy Pop P One', sans-serif;
-	text-align: center;
-	margin: 2em 0;
+.menu-item {
+    font-family: 'Bungee', cursive;
+    font-size: 3em;
+    color: var(--dark-wood-color);
+    width: 400px;
+    text-align: center;
+    border: 5px var(--dark-wood-color) solid;
+    border-radius: 100px;
+    padding: 0.3em 0.5em;
+    margin: 10px;
 }
 
-.jumbotron {
-	background: var(--main-backgroundColor);
-}
-
-.jumbotron .btn {
-	background: rgb(66, 135, 245);
-	border: none;
-	text-transform: uppercase;
-	font-weight: bold;
-}
-
-.jumbotron .btn:hover {
-	background: #008CBA;
-}
-
-img {
-	width: 40%;
-	height: 40%;
+.menu-item:hover {
+    border: 5px white solid;
+    color: white;
 }
 
 footer {
-	width: 100%;
-	position: fixed;
-	bottom: 0;
-	text-align: center;
-	padding: 0.5em;
-}
-
-@media screen and (max-width: 900px) {
-	img {
-		display: none;
-	}
-
-	#header {
-		margin: 1em 0;
-	}
+    font-family: Arial;
+    bottom: 0;
+    position: fixed;
+    color: var(--dark-wood-color);
+    align-self: flex-end;
 }
