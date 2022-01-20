@@ -85,6 +85,7 @@ GameController.prototype.executeFrameActions = function() {
         if (word.y > this.canvas.getHeight()) { 
             this.words.splice(i,1);
             this.player.missWord();
+            this.updateTextBox();
         }
     }
 
@@ -130,6 +131,9 @@ GameController.prototype.updateTextBox = function() {
         for (i in word.text) { // Iterating through each char
             if (word.text[i] == this.userInputText[i]) { // Check if the char in the i-th of both strings position matches
                 currentPrefixIndex++;
+            }
+            else {
+                break;
             }
         }
         maxPrefixIndex = Math.max(maxPrefixIndex, currentPrefixIndex); // Get the maximum value between current maximum and current prefix length
