@@ -20,5 +20,5 @@ Player.prototype.enterWord = function(word) {
  * Player misses a word
  */
 Player.prototype.missWord = function() {
-    // Penalize the player here
+    this.lives--;
 }
