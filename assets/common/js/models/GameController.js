@@ -100,12 +100,14 @@ GameController.prototype.enterWord = function() {
 
 GameController.prototype.enterCharacter = function(charCode) {
     // This is a backspace
-    if(charCode === 8) { // Remove the last character in userInputText
+   if(charCode === 8) { // Remove the last character in userInputText
         this.userInputText = this.userInputText.slice(0, -1);
     }
     else { // Push the input character to userInputText
         this.userInputText += String.fromCharCode(charCode);
     }
+
+	this.updateHighlightInd()
 }
 
 /**
@@ -140,6 +142,20 @@ GameController.prototype.executeFrameActions = function() {
 
     // If the player lives is zero, end the game
     if(this.player.lives == 0) this.stop(true);
+}
+
+/*
+ * Search words for text that matches the userInputText and updates highlightInd accordingly. To be called with every keyboard input (in enterCharacter).
+ */
+GameController.prototype.updateHighlightInd = function() {
+	highlightSearch = new RegExp('^' + this.userInputText) // A regex that searches for strings starting with userInputText
+	for (word of this.words) {
+		if (word.text.search(highlightSearch) !== -1) {
+			word.highlightInd = this.userInputText.length // If there is a match among words.text, set that word's highlight index to userInputText.length
+		} else {
+			word.highlightInd = 0 // Reset highlight index if there is no longer a match (i.e. word highlight search narrows)
+		}
+	}
 }
 
 /**
