@@ -76,7 +76,7 @@ GameController.prototype.getPlayerWPM = function() {
 
 GameController.prototype.executeFrameActions = function() {
     // Move all the words down
-    for(let i = 0; i < this.words.length; ++i) {
+    for(let i = this.words.length-1 ; i >= 0 ; --i) {
         let word = this.words[i];
         // Bonus word moves down quicker than normal words
         if(word.isBonus) word.y += this.speed + 1;
