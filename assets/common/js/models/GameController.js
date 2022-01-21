@@ -22,8 +22,17 @@ function GameController() {
  */
 GameController.prototype.start = function() {
     this.gameInProgress = true;
+
     this.wordGenerationIntervalId = window.setInterval(() => { this.generateWord(); }, 60000 / this.wpm);
-    this.frameIntervalId = window.setInterval(() => { this.executeFrameActions(); }, 1000 / 60); // 60 FPS
+    this.frameIntervalId = window.requestAnimationFrame(() => { frameFn(); });
+
+    // Make sure to use the arrow function here to make the current context accessible inside the nested function.
+    const frameFn = () => {
+        this.executeFrameActions();
+
+        // Recursively call the frameFn function to keep the frame request going
+        this.frameIntervalId = window.requestAnimationFrame(frameFn);
+    }
 
     this.timer.start();
 }
@@ -32,7 +41,7 @@ GameController.prototype.start = function() {
  * Stop the game. Call this function when game is over.
  */
 GameController.prototype.stop = function() {
-    window.clearInterval(this.frameIntervalId);
+    window.cancelAnimationFrame(this.frameIntervalId);
     window.clearInterval(this.wordGenerationIntervalId);
 
     this.gameInProgress = false;
