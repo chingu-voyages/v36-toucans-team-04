@@ -56,13 +56,21 @@ GameController.prototype.stop = function() {
  * Validate the current value of userInputText.
  */
 GameController.prototype.enterWord = function() {
-
+    const wordsAsStrings = this.words.map((word) => word.text ); // Maps Word objects to strings
+    if (wordsAsStrings.includes(this.userInputText)) ; // Word typed correctly
+    else { // Word failed to be typed
+    }
+    this.userInputText = "";
 }
 
 GameController.prototype.enterCharacter = function(charCode) {
     // This is a backspace
-    if(charCode === 8) ;// Remove the last character in userInputText
-    else ; // Push the input character to userInputText
+    if(charCode === 8) { // Remove the last character in userInputText
+        this.userInputText = this.userInputText.slice(0, -1);
+    }
+    else { // Push the input character to userInputText
+        this.userInputText += String.fromCharCode(charCode);
+    }
 }
 
 /**
@@ -112,4 +120,28 @@ GameController.prototype.generateWord = function() {
     }
 
     this.numWordsSpawned ++;
+    this.updateTextBox(); // Updates the text box when a new word is added
+}
+
+/**
+ * Updates the TypeBox's innerHTML  
+ */
+GameController.prototype.updateTextBox = function() {
+    let maxPrefixIndex = -1; // Index indicating the end of the matching prefix with the maximum length between words displayed and user input
+    for (word of this.words) {
+        let currentPrefixIndex = -1; // Index indicating the end of the matching prefix of the current word with user input
+        for (i in word.text) { // Iterating through each char
+            if (word.text[i] == this.userInputText[i]) { // Check if the char in the i-th of both strings position matches
+                currentPrefixIndex++;
+            }
+        }
+        maxPrefixIndex = Math.max(maxPrefixIndex, currentPrefixIndex); // Get the maximum value between current maximum and current prefix length
+    }
+    let prefix = "<span class=\"correctly-typed\">" + this.userInputText.substr(0, maxPrefixIndex+1) + "</span>";
+    let suffix = "<span class=\"incorrectly-typed\">" + this.userInputText.substr(maxPrefixIndex+1, this.userInputText.length - 1) + "</span>";
+    let innerHTML = prefix + suffix;
+    if (maxPrefixIndex == -1) {
+        innerHTML = "<span class=\"incorrectly-typed\">" + this.userInputText + "</span>";
+    }
+    $("#text-display").html(innerHTML); // Update the User Input Display
 }
