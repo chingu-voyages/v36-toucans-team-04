@@ -42,7 +42,7 @@ $(window).on("keypress", event => {
         if(event.keyCode == 13 || event.keyCode == 32) gameController.enterWord();
         else gameController.enterCharacter(event.charCode);
 
-        $("#text-display").text(gameController.userInputText); // Update the User Input Display
+        gameController.updateTextBox();
     }
 });
 
@@ -52,7 +52,7 @@ $(window).on("keydown", event => {
     if(gameController.gameInProgress && event.keyCode == 8) {
         gameController.enterCharacter(event.keyCode);
 
-        $("#text-display").text(gameController.userInputText); // Update the User Input Display
+        gameController.updateTextBox();
     }
 });
 

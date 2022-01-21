@@ -43,6 +43,14 @@ body {
     font-family: "Arial";
 }
 
+#text-display .correctly-typed {
+    background-color: green;
+}
+
+#text-display .incorrectly-typed {
+    background-color: red;
+}
+
 /*
     Below is styling for the Game Over modal
 */
