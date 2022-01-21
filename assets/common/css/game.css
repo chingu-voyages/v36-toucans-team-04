@@ -1,12 +1,22 @@
 body {
-    width: 99vw;
+    width: 100vw;
     height: 100vh;
     background: rgb(50,50,50);
 }
 
 #nav-bar{
     padding: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#back-button-container {
     display: inline-block;
+}
+
+#canvas {
+    display: block;
 }
 
 .fa-arrow-left {
@@ -15,7 +25,7 @@ body {
 }
 
 #text-display-container {
-    border-top: white 1px solid;
+    border-top: white 2px solid;
     display: flex;
     flex-direction: auto;
     justify-content: center;
@@ -26,4 +36,26 @@ body {
     color: white;
     font-size: 2.5em;
     font-family: "Arial";
+}
+
+/*
+    Below is styling for the Game Over modal
+*/
+.modal-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.fieldset {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.label {
+    width: 40%;
+}
+
+.value {
+    width: 20%;
 }

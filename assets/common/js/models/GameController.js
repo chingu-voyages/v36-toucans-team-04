@@ -18,6 +18,37 @@ function GameController() {
 }
 
 /**
+ * Reset the game
+ */
+GameController.prototype.reset = function() {
+    /**
+     * Call stop() just in case this function has been called while the game is still running.
+     * Pass false to fireEvent since we don't need to send the event to the interface.
+     */
+    this.stop(false);
+
+    // Reset objects
+    this.player = new Player();
+    this.canvas.clear();
+    this.timer.reset();
+
+    /**
+     * Once we implement different difficulty level, maybe we should reset to whatever
+     * difficulty the player originally selected. Also, since wpm, speed are all tied to the difficulty level
+     * we may create an object for managing the difficulty levels and allow that object to set the wpm and speed
+     * based on the difficulty selected.
+     */
+    this.difficulty = 1;
+    // For now, just reset the game WPM and speed to default values.
+    this.wpm = 30;
+    this.speed = 1;
+
+    this.words = [];
+    this.userInputText = "";
+    this.numWordsSpawned = 0;
+}
+
+/**
  * Start the game.
  */
 GameController.prototype.start = function() {
@@ -30,16 +61,20 @@ GameController.prototype.start = function() {
 
 /**
  * Stop the game. Call this function when game is over.
+ * @return {boolean} Should this function fire the gameover event and send a message to the interface?
  */
-GameController.prototype.stop = function() {
+GameController.prototype.stop = function(fireEvent) {
     window.clearInterval(this.frameIntervalId);
     window.clearInterval(this.wordGenerationIntervalId);
 
     this.gameInProgress = false;
     this.timer.stop();
 
+    this.wordGenerationIntervalId = null;
+    this.frameIntervalId = null;
+
     // Fire gameover event
-    $(window).trigger("gameover");
+    if(fireEvent) $(window).trigger("gameover");
 }
 
 /**
@@ -75,11 +110,12 @@ GameController.prototype.executeFrameActions = function() {
     }
 
 
-    // If the player lives is zero, end the game
-    if(this.player.lives == 0) this.stop();
 
     // Draw on the canvas
     this.canvas.draw(this.words, this.player.score, this.player.lives, this.getPlayerWPM(), this.difficulty);
+
+    // If the player lives is zero, end the game
+    if(this.player.lives == 0) this.stop(true);
 }
 
 /**
