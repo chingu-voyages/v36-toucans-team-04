@@ -16,11 +16,17 @@ $(".fa-arrow-left").on("click", () => { window.location.href = "index.html"; });
 $("#back-button-container").on("mouseenter", function() { $(this).addClass("animate__animated animate__headShake"); });
 $("#back-button-container").on("mouseleave", function() { $(this).removeClass("animate__animated animate__headShake"); });
 
-// Add event listener for the END Game button
+// Add event listener for the END Game button on the game page
 $("#end-game-button").on("click", function() {
+    $("#end-game-confirm-modal").modal("show");
+});
+
+// Add event listener for the End Game button on the game end confirmation modal
+$("#confirm-end-game-btn").on("click", function() {
+    $("#end-game-confirm-modal").modal("hide");
     gameController.stop();
     $("#game-over-modal").modal("show");
-});
+})
 
 // Add event listener for the Restart Game button on the game over modal
 $("#modal-restart-game-btn").on("click", function() {
