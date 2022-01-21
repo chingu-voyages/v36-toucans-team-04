@@ -85,10 +85,17 @@ GameController.prototype.getPlayerWPM = function() {
 
 GameController.prototype.executeFrameActions = function() {
     // Move all the words down
-    for(word of this.words) {
+    for(let i = this.words.length-1 ; i >= 0 ; --i) {
+        let word = this.words[i];
         // Bonus word moves down quicker than normal words
         if(word.isBonus) word.y += this.speed + 1;
         else word.y += this.speed;
+        // Remove the word from this.words array if it reaches the bottom
+        if (word.y > this.canvas.getHeight()) { 
+            this.words.splice(i,1);
+            this.player.missWord();
+            this.updateTextBox();
+        }
     }
 
 
@@ -133,6 +140,9 @@ GameController.prototype.updateTextBox = function() {
         for (i in word.text) { // Iterating through each char
             if (word.text[i] == this.userInputText[i]) { // Check if the char in the i-th of both strings position matches
                 currentPrefixIndex++;
+            }
+            else {
+                break;
             }
         }
         maxPrefixIndex = Math.max(maxPrefixIndex, currentPrefixIndex); // Get the maximum value between current maximum and current prefix length
