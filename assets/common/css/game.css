@@ -34,13 +34,15 @@ body {
     display: flex;
     flex-direction: auto;
     justify-content: center;
-    height: 50px;
+    height: 5em;
+    padding: 5px;
 }
 
 #text-display {
     color: white;
     font-size: 2.5em;
     font-family: "Arial";
+    height: 50px;
 }
 
 #text-display .correctly-typed {

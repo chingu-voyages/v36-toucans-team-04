@@ -5,7 +5,7 @@ $("canvas").prop("width", ($(window).width() || $("body").width()));
 $("canvas").prop(
     "height",
     // Subtract 20 for the 10px padding on nav bar and 2px for the border size
-    ($(window).height() || $("body").height()) - $("#nav-bar").height() - $("#text-display-container").height() - 22
+    ($(window).height() || $("body").height()) - $("#nav-bar").height() - $("#text-display-container").height() - 32
 );
 
 // Start the game
@@ -31,6 +31,7 @@ $("#confirm-end-game-btn").on("click", function() {
 // Add event listener for the Restart Game button on the game over modal
 $("#modal-restart-game-btn").on("click", function() {
     $("#game-over-modal").modal("hide");
+    $("#text-display").html("");
     gameController.reset();
     gameController.start();
 });
