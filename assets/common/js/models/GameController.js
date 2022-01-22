@@ -55,11 +55,21 @@ GameController.prototype.stop = function() {
  * Validate the current value of userInputText.
  */
 GameController.prototype.enterWord = function() {
-    const wordsAsStrings = this.words.map((word) => word.text ); // Maps Word objects to strings
-    if (wordsAsStrings.includes(this.userInputText)) ; // Word typed correctly
-    else { // Word failed to be typed
+	let typedWord = this.words.find(word => word.highlightInd > 0)
+	let typedWordInd = this.words.indexOf(typedWord)
+    if (typedWord.text && typedWord.text === this.userInputText) { 
+		this.words.splice(typedWordInd, 1)
+		this.enterWordSuccess()
+	}
+    else { 
+
     }
     this.userInputText = "";
+	this.updateHighlightInd()
+}
+
+GameController.prototype.enterWordSuccess = function() {
+	
 }
 
 GameController.prototype.enterCharacter = function(charCode) {
