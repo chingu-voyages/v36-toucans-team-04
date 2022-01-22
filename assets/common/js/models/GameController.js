@@ -58,18 +58,14 @@ GameController.prototype.enterWord = function() {
 	let wordToType = this.words.find(word => word.highlightInd > 0) // Find the word that is being typed (is highlighted; highlightInd > 0)
 	let wordToTypeInd = this.words.indexOf(wordToType) // Retrieve index to splice without a second loop
     if (wordToType && wordToType.text === this.userInputText) { // If there is a highlighted word and its text matches the user input
+		this.player.enterWord(wordToType)
 		this.words.splice(wordToTypeInd, 1)
-		this.enterWordSuccess()
 	}
     else { 
 		// This probably exists for a sound effect later
     }
     this.userInputText = "";
 	this.updateHighlightInd()
-}
-
-GameController.prototype.enterWordSuccess = function() {
-	
 }
 
 GameController.prototype.enterCharacter = function(charCode) {
