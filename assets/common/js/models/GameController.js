@@ -3,8 +3,8 @@ function GameController() {
 	this.timer = new Timer();
 	this.player = new Player();
 	this.dictionary = new Dictionary();
-	this.difficulty = 1;
 
+	this.difficulty = 1;
 	this.gameInProgress = false;
 	this.wpm = 30;
 	this.words = [];
@@ -12,7 +12,6 @@ function GameController() {
 	this.speed = 1;
 
 	this.wordGenerationIntervalId = null;
-	this.frameIntervalId = null;
 
 	this.numWordsSpawned = 0;
 }
@@ -27,7 +26,7 @@ GameController.prototype.reset = function() {
 	 */
 	this.stop(false);
 
-	// Reset objects
+	// Reset objects except for the dictionary, which doesn't require reset
 	this.player = new Player();
 	this.canvas.clear();
 	this.timer.reset();
@@ -45,7 +44,7 @@ GameController.prototype.reset = function() {
 
 	this.words = [];
 	this.userInputText = "";
-	this.numWordsSpawned = 0;
+    this.numWordsSpawned = 0;
 }
 
 /**
@@ -54,16 +53,16 @@ GameController.prototype.reset = function() {
 GameController.prototype.start = function() {
 	this.gameInProgress = true;
 
-	this.wordGenerationIntervalId = window.setInterval(() => { this.generateWord(); }, 60000 / this.wpm);
-	this.frameIntervalId = window.requestAnimationFrame(() => { frameFn(); });
+    this.wordGenerationIntervalId = window.setInterval(() => { this.generateWord(); }, 60000 / this.wpm);
+    window.requestAnimationFrame(() => { frameFn(); });
 
 	// Make sure to use the arrow function here to make the current context accessible inside the nested function.
 	const frameFn = () => {
 		this.executeFrameActions();
 
-		// Recursively call the frameFn function to keep the frame request going
-		this.frameIntervalId = window.requestAnimationFrame(frameFn);
-	}
+        // Recursively call the frameFn function to keep the frame request going as long as the game is in progress
+        if(this.gameInProgress) window.requestAnimationFrame(frameFn);
+    }
 
 	this.timer.start();
 }
@@ -73,14 +72,12 @@ GameController.prototype.start = function() {
  * @return {boolean} Should this function fire the gameover event and send a message to the interface?
  */
 GameController.prototype.stop = function(fireEvent) {
-	window.cancelAnimationFrame(this.frameIntervalId);
-	window.clearInterval(this.wordGenerationIntervalId);
+    // Clear the word generation interval
+    window.clearInterval(this.wordGenerationIntervalId);
+	this.wordGenerationIntervalId = null;
 
 	this.gameInProgress = false;
 	this.timer.stop();
-
-	this.wordGenerationIntervalId = null;
-	this.frameIntervalId = null;
 
 	// Fire gameover event
 	if(fireEvent) $(window).trigger("gameover");
