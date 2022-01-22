@@ -55,14 +55,14 @@ GameController.prototype.stop = function() {
  * Validate the current value of userInputText.
  */
 GameController.prototype.enterWord = function() {
-	let typedWord = this.words.find(word => word.highlightInd > 0)
-	let typedWordInd = this.words.indexOf(typedWord)
-    if (typedWord.text && typedWord.text === this.userInputText) { 
-		this.words.splice(typedWordInd, 1)
+	let wordToType = this.words.find(word => word.highlightInd > 0) // Find the word that is being typed (is highlighted; highlightInd > 0)
+	let wordToTypeInd = this.words.indexOf(wordToType) // Retrieve index to splice without a second loop
+    if (wordToType && wordToType.text === this.userInputText) { // If there is a highlighted word and its text matches the user input
+		this.words.splice(wordToTypeInd, 1)
 		this.enterWordSuccess()
 	}
     else { 
-
+		// This probably exists for a sound effect later
     }
     this.userInputText = "";
 	this.updateHighlightInd()
