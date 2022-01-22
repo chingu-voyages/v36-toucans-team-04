@@ -12,7 +12,6 @@ function GameController() {
     this.speed = 1;
 
     this.wordGenerationIntervalId = null;
-    this.frameIntervalId = null;
 
     this.numWordsSpawned = 0;
 }
@@ -24,14 +23,14 @@ GameController.prototype.start = function() {
     this.gameInProgress = true;
 
     this.wordGenerationIntervalId = window.setInterval(() => { this.generateWord(); }, 60000 / this.wpm);
-    this.frameIntervalId = window.requestAnimationFrame(() => { frameFn(); });
+    window.requestAnimationFrame(() => { frameFn(); });
 
     // Make sure to use the arrow function here to make the current context accessible inside the nested function.
     const frameFn = () => {
         this.executeFrameActions();
 
-        // Recursively call the frameFn function to keep the frame request going
-        this.frameIntervalId = window.requestAnimationFrame(frameFn);
+        // Recursively call the frameFn function to keep the frame request going as long as the game is in progress
+        if(this.gameInProgress) window.requestAnimationFrame(frameFn);
     }
 
     this.timer.start();
@@ -41,7 +40,7 @@ GameController.prototype.start = function() {
  * Stop the game. Call this function when game is over.
  */
 GameController.prototype.stop = function() {
-    window.cancelAnimationFrame(this.frameIntervalId);
+    // Clear the word generation interval
     window.clearInterval(this.wordGenerationIntervalId);
 
     this.gameInProgress = false;
