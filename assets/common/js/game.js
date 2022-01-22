@@ -1,12 +1,7 @@
 const gameController = new GameController();
 
 // Set the canvas height and width based on the current body size.
-$("canvas").prop("width", ($(window).width() || $("body").width()));
-$("canvas").prop(
-    "height",
-    // Subtract 20 for the 10px padding on nav bar and 2px for the border size
-    ($(window).height() || $("body").height()) - $("#nav-bar").height() - $("#text-display-container").height() - 32
-);
+resetCanvasSize();
 
 // Start the game
 gameController.start();
@@ -32,6 +27,7 @@ $("#confirm-end-game-btn").on("click", function() {
 $("#modal-restart-game-btn").on("click", function() {
     $("#game-over-modal").modal("hide");
     $("#text-display").html("");
+    resetCanvasSize();
     gameController.reset();
     gameController.start();
 });
@@ -59,5 +55,14 @@ $(window).on("keydown", event => {
 
 // Gameover event has been triggered from the GameController
 $(window).on("gameover", () => {
-    // Things to do when the game is over
+    $("#game-over-modal").modal("show");
 });
+
+function resetCanvasSize() {
+    $("canvas").prop("width", ($(window).width() || $("body").width()));
+    $("canvas").prop(
+        "height",
+        // Subtract 20 for the 10px padding on nav bar and 2px for the border size
+        ($(window).height() || $("body").height()) - $("#nav-bar").height() - $("#text-display-container").height() - 32
+    );
+}
