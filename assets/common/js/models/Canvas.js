@@ -77,6 +77,14 @@ Canvas.prototype.getWidth = function() {
 }
 
 /**
+ * Return the height of the canvas
+ * @returns {number} the height of the canvas
+ */
+Canvas.prototype.getHeight = function() {
+    return this.element.height;
+}
+
+/**
  * Internal function to return the 2D canvas context
  * @returns {*} 2D Context of the canvas
  */
@@ -90,6 +98,5 @@ Canvas.prototype.get2DContext = function() {
  */
 Canvas.prototype.clear = function() {
     const ctx = this.get2DContext();
-
     ctx.clearRect(0, 0, this.element.width, this.element.height);
 }

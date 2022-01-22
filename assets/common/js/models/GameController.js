@@ -12,7 +12,6 @@ function GameController() {
     this.speed = 1;
 
     this.wordGenerationIntervalId = null;
-    this.frameIntervalId = null;
 
     this.numWordsSpawned = 0;
 }
@@ -24,14 +23,14 @@ GameController.prototype.start = function() {
     this.gameInProgress = true;
 
     this.wordGenerationIntervalId = window.setInterval(() => { this.generateWord(); }, 60000 / this.wpm);
-    this.frameIntervalId = window.requestAnimationFrame(() => { frameFn(); });
+    window.requestAnimationFrame(() => { frameFn(); });
 
     // Make sure to use the arrow function here to make the current context accessible inside the nested function.
     const frameFn = () => {
         this.executeFrameActions();
 
-        // Recursively call the frameFn function to keep the frame request going
-        this.frameIntervalId = window.requestAnimationFrame(frameFn);
+        // Recursively call the frameFn function to keep the frame request going as long as the game is in progress
+        if(this.gameInProgress) window.requestAnimationFrame(frameFn);
     }
 
     this.timer.start();
@@ -41,7 +40,7 @@ GameController.prototype.start = function() {
  * Stop the game. Call this function when game is over.
  */
 GameController.prototype.stop = function() {
-    window.cancelAnimationFrame(this.frameIntervalId);
+    // Clear the word generation interval
     window.clearInterval(this.wordGenerationIntervalId);
 
     this.gameInProgress = false;
@@ -56,13 +55,23 @@ GameController.prototype.stop = function() {
  * Validate the current value of userInputText.
  */
 GameController.prototype.enterWord = function() {
-
+    const wordsAsStrings = this.words.map((word) => word.text ); // Maps Word objects to strings
+    if (wordsAsStrings.includes(this.userInputText)) ; // Word typed correctly
+    else { // Word failed to be typed
+    }
+    this.userInputText = "";
 }
 
 GameController.prototype.enterCharacter = function(charCode) {
     // This is a backspace
-    if(charCode === 8) ;// Remove the last character in userInputText
-    else ; // Push the input character to userInputText
+   if(charCode === 8) { // Remove the last character in userInputText
+        this.userInputText = this.userInputText.slice(0, -1);
+    }
+    else { // Push the input character to userInputText
+        this.userInputText += String.fromCharCode(charCode);
+    }
+
+	this.updateHighlightInd()
 }
 
 /**
@@ -77,10 +86,17 @@ GameController.prototype.getPlayerWPM = function() {
 
 GameController.prototype.executeFrameActions = function() {
     // Move all the words down
-    for(word of this.words) {
+    for(let i = this.words.length-1 ; i >= 0 ; --i) {
+        let word = this.words[i];
         // Bonus word moves down quicker than normal words
         if(word.isBonus) word.y += this.speed + 1;
         else word.y += this.speed;
+        // Remove the word from this.words array if it reaches the bottom
+        if (word.y > this.canvas.getHeight()) { 
+            this.words.splice(i,1);
+            this.player.missWord();
+            this.updateTextBox();
+        }
     }
 
 
@@ -89,6 +105,20 @@ GameController.prototype.executeFrameActions = function() {
 
     // Draw on the canvas
     this.canvas.draw(this.words, this.player.score, this.player.lives, this.getPlayerWPM(), this.difficulty);
+}
+
+/*
+ * Search words for text that matches the userInputText and updates highlightInd accordingly. To be called with every keyboard input (in enterCharacter).
+ */
+GameController.prototype.updateHighlightInd = function() {
+	highlightSearch = new RegExp('^' + this.userInputText) // A regex that searches for strings starting with userInputText
+	for (word of this.words) {
+		if (word.text.search(highlightSearch) !== -1) {
+			word.highlightInd = this.userInputText.length // If there is a match among words.text, set that word's highlight index to userInputText.length
+		} else {
+			word.highlightInd = 0 // Reset highlight index if there is no longer a match (i.e. word highlight search narrows)
+		}
+	}
 }
 
 /**
@@ -112,4 +142,31 @@ GameController.prototype.generateWord = function() {
     }
 
     this.numWordsSpawned ++;
+    this.updateTextBox(); // Updates the text box when a new word is added
+}
+
+/**
+ * Updates the TypeBox's innerHTML  
+ */
+GameController.prototype.updateTextBox = function() {
+    let maxPrefixIndex = -1; // Index indicating the end of the matching prefix with the maximum length between words displayed and user input
+    for (word of this.words) {
+        let currentPrefixIndex = -1; // Index indicating the end of the matching prefix of the current word with user input
+        for (i in word.text) { // Iterating through each char
+            if (word.text[i] == this.userInputText[i]) { // Check if the char in the i-th of both strings position matches
+                currentPrefixIndex++;
+            }
+            else {
+                break;
+            }
+        }
+        maxPrefixIndex = Math.max(maxPrefixIndex, currentPrefixIndex); // Get the maximum value between current maximum and current prefix length
+    }
+    let prefix = "<span class=\"correctly-typed\">" + this.userInputText.substr(0, maxPrefixIndex+1) + "</span>";
+    let suffix = "<span class=\"incorrectly-typed\">" + this.userInputText.substr(maxPrefixIndex+1, this.userInputText.length - 1) + "</span>";
+    let innerHTML = prefix + suffix;
+    if (maxPrefixIndex == -1) {
+        innerHTML = "<span class=\"incorrectly-typed\">" + this.userInputText + "</span>";
+    }
+    $("#text-display").html(innerHTML); // Update the User Input Display
 }
