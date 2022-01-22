@@ -18,7 +18,6 @@ $("#end-game-button").on("click", function() {
 
 // Add event listener for the End Game button on the game end confirmation modal
 $("#confirm-end-game-btn").on("click", function() {
-	$("#end-game-confirm-modal").modal("hide");
 	gameController.stop();
 	displayGameOverModal();
 })
@@ -58,20 +57,33 @@ $(window).on("gameover", () => {
 	displayGameOverModal();
 });
 
+/**
+ * Display the Game Over modal
+ */
 function displayGameOverModal() {
+	// The confirmation modal can be closed.
+	$("#end-game-confirm-modal").modal("hide");
+
+	// Obtain player performance data from the game controller
 	const stats = gameController.getPlayerPerformanceData();
+
+	// Iterating each key in the data object, set the values to fields
 	for(key in stats) {
 		$("#game-" + key).text(stats[key]);
 	}
 
+	// Display the game over modal
 	$("#game-over-modal").modal("show");
 }
 
+/**
+ * Function to set the height and width of canvas
+ */
 function resetCanvasSize() {
 	$("canvas").prop("width", ($(window).width() || $("body").width()));
 	$("canvas").prop(
 		"height",
 		// Subtract 20 for the 10px padding on nav bar and 2px for the border size
-		($(window).height() || $("body").height()) - $("#nav-bar").height() - $("#text-display-container").height() - 32
+		($(window).height() || $("body").height()) - $("#nav-bar").height() - $("#text-display-container").height() - 22
 	);
 }
