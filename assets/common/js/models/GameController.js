@@ -264,6 +264,12 @@ GameController.prototype.findBestWordMatch = function() {
 	return match;
 }
 
+/**
+ * Function to return player's performance data to the game interface for displaying
+ * the Game Over screen.
+ * 
+ * @returns {object} Player performance data metrics
+ */
 GameController.prototype.getPlayerPerformanceData = function() {
 	const obj = {};
 

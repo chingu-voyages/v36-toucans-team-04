@@ -32,7 +32,8 @@ Player.prototype.enterWord = function(word) {
  * @param {*} incorrect number of characters that player entered incorrectly
  */
 Player.prototype.enterIncorrectWord = function(correct, incorrect) {
-	this.numCorrectChars += correct + 1;
+	// To receive credit for Space/Enter keypress, at least 1 character needs to be correct
+	if(correct > 0) this.numCorrectChars += correct + 1;
 	this.numIncorrectChars += incorrect;
 	this.numIncorrectWords++;
 }
