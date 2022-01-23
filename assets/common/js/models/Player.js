@@ -1,11 +1,11 @@
 function Player() {
-	this.score = 0;
-	this.numBonus = 0;
-	this.numCorrectWords = 0;
-	this.numIncorrectWords = 0;
-	this.numCorrectChars = 0;
-	this.numIncorrectChars = 0;
-	this.lives = 5;
+    this.score = 0;
+    this.numBonus = 0;
+    this.numCorrectWords = 0;
+    this.numIncorrectWords = 0;
+    this.numCorrectChars = 0;
+    this.numIncorrectChars = 0;
+    this.lives = 5;
 }
 
 /**
@@ -13,16 +13,16 @@ function Player() {
  * @param {Word} word the Word object that player entered
  */
 Player.prototype.enterWord = function(word) {
-	// We add 1 since Space/Enter key counts as a character
-	this.numCorrectChars += word.text.length + 1;
-	this.numCorrectWords++;
+    // We add 1 since Space/Enter key counts as a character
+    this.numCorrectChars += word.text.length + 1;
+    this.numCorrectWords++;
 
-	this.score++;
+    this.score++;
 
-	if(word.isBonus) {
-		this.lives ++;
-		this.numBonus++;
-	}
+    if(word.isBonus) {
+        this.lives ++;
+        this.numBonus++;
+    }
 }
 
 /**
@@ -32,15 +32,15 @@ Player.prototype.enterWord = function(word) {
  * @param {*} incorrect number of characters that player entered incorrectly
  */
 Player.prototype.enterIncorrectWord = function(correct, incorrect) {
-	// To receive credit for Space/Enter keypress, at least 1 character needs to be correct
-	if(correct > 0) this.numCorrectChars += correct + 1;
-	this.numIncorrectChars += incorrect;
-	this.numIncorrectWords++;
+    // To receive credit for Space/Enter keypress, at least 1 character needs to be correct
+    if(correct > 0) this.numCorrectChars += correct + 1;
+    this.numIncorrectChars += incorrect;
+    this.numIncorrectWords++;
 }
 
 /**
  * Player misses a word
  */
 Player.prototype.missWord = function() {
-	this.lives--;
+    this.lives--;
 }
