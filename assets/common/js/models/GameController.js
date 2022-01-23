@@ -91,16 +91,19 @@ GameController.prototype.enterWord = function() {
     // Return if the userInputText is empty
     if(this.userInputText.length == 0) return;
 
-    const wordsAsStrings = this.words.map((word) => word.text ); // Maps Word objects to strings
-    if (wordsAsStrings.includes(this.userInputText)) ; // Word typed correctly
-    else {
+    let wordToType = this.words.find(word => word.highlightInd === word.text.length); // Find a word that has been typed
+    let wordToTypeInd = this.words.indexOf(wordToType); // Retrieve index to splice without a second loop
+    if (wordToType) { // If a successfully typed word is found
+        this.player.enterWord(wordToType);
+        this.words.splice(wordToTypeInd, 1);
+    } else {
         const match = this.findBestWordMatch();
 
         // Record the player's correct/incorrect number of characters
         this.player.enterIncorrectWord(match.correct, match.incorrect);
     }
-
     this.userInputText = "";
+    this.updateHighlightInd();
 }
 
 /**

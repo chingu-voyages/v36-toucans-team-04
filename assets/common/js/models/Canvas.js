@@ -1,5 +1,4 @@
 function Canvas() {
-    this.backgroundColor = "#323232";
     this.element = document.getElementById("canvas");
     this.image = new Image(40, 40);
 
@@ -98,7 +97,5 @@ Canvas.prototype.get2DContext = function() {
  */
 Canvas.prototype.clear = function() {
     const ctx = this.get2DContext();
-
-    ctx.fillStyle = this.backgroundColor;
-    ctx.fillRect(0, 0, this.element.width, this.element.height);
+    ctx.clearRect(0, 0, this.element.width, this.element.height);
 }
