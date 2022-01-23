@@ -1,5 +1,4 @@
 function Canvas() {
-    this.backgroundColor = "transparent";
     this.element = document.getElementById("canvas");
     this.image = new Image(40, 40);
 
