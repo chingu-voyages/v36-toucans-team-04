@@ -6,7 +6,10 @@
 }
 
 body {
-    background: radial-gradient(#afe1af, #50c878);
+    background-image: url("../../images/background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    
     display: flex;
     flex-direction: column;
     align-items: center;
