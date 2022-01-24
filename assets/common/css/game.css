@@ -1,0 +1,80 @@
+body {
+    width: 100vw;
+    height: 100vh;
+    background: rgb(50,50,50);
+}
+
+#nav-bar{
+    padding: 10px;
+}
+
+#back-button-container {
+    display: inline-block;
+}
+
+#end-game-button-container {
+    position: absolute;
+    top: 5px;
+    right: 150px;
+}
+
+#canvas {
+    display: block;
+}
+
+.fa-arrow-left {
+    font-size: 30px;
+    color: white;
+}
+
+#text-display-container {
+    border-top: white 2px solid;
+    display: flex;
+    flex-direction: auto;
+    justify-content: center;
+    height: 4em;
+}
+
+#text-display {
+    color: white;
+    font-size: 2.5em;
+    font-family: "Arial";
+    height: 50px;
+}
+
+#text-display .correctly-typed {
+    background-color: green;
+}
+
+#text-display .incorrectly-typed {
+    background-color: red;
+}
+
+/*
+    Below is styling for the Game Over modal
+*/
+.modal-body {
+    display: flex;
+    flex-direction: column;
+}
+
+#game-over-modal-label {
+    font-size: 3em;
+    color: red;
+}
+
+.fieldset {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    font-size: 1.5em;
+}
+
+.label {
+    width: 60%;
+}
+
+.value {
+    width: 20%;
+}
