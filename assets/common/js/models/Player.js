@@ -1,6 +1,7 @@
 function Player() {
     this.score = 0;
     this.numBonus = 0;
+    this.numBackspaces = 0;
     this.numCorrectWords = 0;
     this.numIncorrectWords = 0;
     this.numCorrectChars = 0;
