@@ -11,6 +11,17 @@ $(".fa-arrow-left").on("click", () => { window.location.href = "index.html"; });
 $("#back-button-container").on("mouseenter", function() { $(this).addClass("animate__animated animate__headShake"); });
 $("#back-button-container").on("mouseleave", function() { $(this).removeClass("animate__animated animate__headShake"); });
 
+// Add event listener for the Difficulty selector button
+$("#difficulty-selection-button").on("click", function() {
+    $("#difficulty-selection-modal").modal("show");
+});
+
+// Add event listener for the Difficulty selector button
+$("#save-settings-btn").on("click", function() {
+    const select = document.querySelector("#difficulty-drop-down");
+    console.log("Difficulty selected " + select[select.selectedIndex].value);
+});
+
 // Add event listener for the END Game button on the game page
 $("#end-game-button").on("click", function() {
     $("#end-game-confirm-modal").modal("show");
