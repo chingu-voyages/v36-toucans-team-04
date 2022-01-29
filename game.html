@@ -1,37 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-	<title>Falling Words!</title>
+    <title>Falling Words!</title>
 
-	<link rel="stylesheet" href="assets/common/css/reset.css">
-	<link rel="stylesheet" href="assets/lib/animate.css-4.1.1/css/animate.min.css">
-	<link rel="stylesheet" href="assets/lib/fontawesome-5.15.4/css/all.min.css">
-	<link rel="stylesheet" href="assets/common/css/game.css">
+    <link rel="stylesheet" href="assets/common/css/reset.css">
+    <link rel="stylesheet" href="assets/lib/animate.css-4.1.1/css/animate.min.css">
+    <link rel="stylesheet" href="assets/lib/fontawesome-5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="assets/lib/bootstrap-4.6.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/common/css/game.css">
 </head>
 <body>
-	<main>
-		<nav id="nav-bar">
-			<i class="fas fa-arrow-left"></i>
-		</nav>
-		<canvas id="canvas">
-			Your browser does not support canvas.
-		</canvas>
-		<div id="text-display-container">
-			<label id="text-display"></label>
-		</div>
-	</main>
-	
-	<script src="assets/lib/jquery-3.6.0/js/jquery-3.6.0.min.js"></script>
-	<script src="assets/common/js/models/Dictionary.js"></script>
-	<script src="assets/common/js/models/Word.js"></script>
-	<script src="assets/common/js/models/Canvas.js"></script>
-	<script src="assets/common/js/models/Player.js"></script>
-	<script src="assets/common/js/models/Timer.js"></script>
-	<script src="assets/common/js/models/GameController.js"></script>
-	<script src="assets/common/js/game.js"></script>
+    <div class="modal" id="end-game-confirm-modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">End Game Confirmation</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to end this game?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button id="confirm-end-game-btn" type="button" class="btn btn-danger">End Game</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="game-over-modal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+        aria-labelledby="game-over-modal-label" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title col-12 text-center" id="game-over-modal-label">Game Over!</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="fieldset">
+                        <div class="label">Elapsed Time:</div>
+                        <div id="game-elapsed-time" class="value"></div>
+                    </div>
+                    <div class="fieldset">
+                        <div class="label">Score:</div>
+                        <div id="game-score" class="value"></div>
+                    </div>
+                    <div class="fieldset">
+                        <div class="label">Highest Difficulty Completed:</div>
+                        <div id="game-highest-difficulty" class="value"></div>
+                    </div>
+                    <div class="fieldset">
+                        <div class="label">Net WPM:</div>
+                        <div id="game-player-wpm" class="value"></div>
+                    </div>
+                    <div class="fieldset">
+                        <div class="label">Bonus Words Entered:</div>
+                        <div id="game-num-bonus" class="value"></div>
+                    </div>
+                    <hr />
+                    <div class="fieldset">
+                        <div class="label">Total # of Words Entered:</div>
+                        <div id="game-num-words-total" class="value"></div>
+                    </div>
+                    <div class="fieldset">
+                        <div class="label"># of Words Entered Correctly:</div>
+                        <div id="game-num-words-correct" class="value"></div>
+                    </div>
+                    <div class="fieldset">
+                        <div class="label"># of Words Entered Incorrectly:</div>
+                        <div id="game-num-words-incorrect" class="value"></div>
+                    </div>
+                    <hr />
+                    <div class="fieldset">
+                        <div class="label">Total # of Characters Entered:</div>
+                        <div id="game-num-chars-total" class="value"></div>
+                    </div>
+                    <div class="fieldset">
+                        <div class="label"># of Characters Entered Correctly:</div>
+                        <div id="game-num-chars-correct" class="value"></div>
+                    </div>
+                    <div class="fieldset">
+                        <div class="label"># of Characters Entered Incorrectly:</div>
+                        <div id="game-num-chars-incorrect" class="value"></div>
+                    </div>
+                    <hr />
+                    <div class="fieldset">
+                        <div class="label">Accuracy %:</div>
+                        <div id="game-accuracy" class="value"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="index.html" class="btn btn-primary">Back to Menu</a>
+                    <a id="modal-restart-game-btn" class="btn btn-primary">Restart Game</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <main>
+        <nav id="nav-bar">
+            <div id="back-button-container">
+                <i class="fas fa-arrow-left"></i>
+            </div>
+            <div id="end-game-button-container">
+                <button id="end-game-button" type="button" class="btn btn-danger">End Game</button>
+            </div>
+        </nav>
+        <canvas id="canvas">
+            Your browser does not support canvas.
+        </canvas>
+        <div id="text-display-container">
+            <label id="text-display"></label>
+        </div>
+    </main>
+
+    <script src="assets/lib/jquery-3.6.0/js/jquery-3.6.0.min.js"></script>
+    <script src="assets/lib/bootstrap-4.6.1/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/common/js/models/Dictionary.js"></script>
+    <script src="assets/common/js/models/Word.js"></script>
+    <script src="assets/common/js/models/Canvas.js"></script>
+    <script src="assets/common/js/models/Player.js"></script>
+    <script src="assets/common/js/models/Timer.js"></script>
+    <script src="assets/common/js/models/GameController.js"></script>
+    <script src="assets/common/js/game.js"></script>
 </body>
 </html>
