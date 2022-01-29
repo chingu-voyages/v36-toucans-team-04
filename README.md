@@ -13,11 +13,11 @@ This Javascript game was created for the Chingu Voyage 36. Our team wants to pro
 ## Features
 | Key Feature                                              | Status           |
 | -------------------------------------------------------- | ---------------- |
-| Landing Screen                                           | Work In Progress |
+| Landing Screen                                           | Complete         |
 | Tutorial Screen                                          | Work In Progress |
-| Falling words that player must type                      | Work In Progress |
-| A set number of chances that players can miss words      | Work In Progress |
-| Spawning of bonus word that can reward additional chance | Work In Progress |
+| Falling words that player must type                      | Complete         |
+| A set number of chances that players can miss words      | Complete         |
+| Spawning of bonus word that can reward additional chance | Complete         |
 | Increasing difficulty level                              | Work In Progress |
 | Capability to select starting difficulty level           | Work In Progress |
 | GameOver screen with player's performance details        | Work In Progress |
