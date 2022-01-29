@@ -15,8 +15,9 @@ canvases.forEach((cnvs,index) => {
 	canvas.setAttribute('height', canvasHeight + 'px')
 	canvas.setAttribute('width', canvasWidth + 'px')
 	canvas.setAttribute('id', 'diff' + canvasNum)
-	ctx.font = '4em Arial'
+	ctx.font = '3em Arial'
 	ctx.fillStyle = '#FF0000'
-	ctx.fillText('Test' + canvasNum, 35, 35)
+	ctx.fillText('Difficulty ' + canvasNum, 5, 35)
+	ctx.fillText('WPM: ' + cnvs.wpm, 5, 65)
 	diffs.appendChild(canvas)
 })
