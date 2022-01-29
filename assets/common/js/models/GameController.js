@@ -1,15 +1,20 @@
 function GameController() {
+    this.difficulties = {
+        "easy": new Difficulty("Easy", 30, 0.5),
+        "medium": new Difficulty("Medium", 30, 0.75),
+        "hard": new Difficulty("Hard", 70, 1),
+        "insane": new Difficulty("Insane", 100, 1.25),
+    }
+
     this.canvas = new Canvas();
     this.timer = new Timer();
     this.player = new Player();
     this.dictionary = new Dictionary();
 
-    this.difficulty = 1;
+    this.difficulty = this.difficulties["easy"];
     this.gameInProgress = false;
-    this.wpm = 30;
     this.words = [];
     this.userInputText = "";
-    this.speed = 1;
 
     this.wordGenerationIntervalId = null;
 
@@ -37,10 +42,7 @@ GameController.prototype.reset = function() {
      * we may create an object for managing the difficulty levels and allow that object to set the wpm and speed
      * based on the difficulty selected.
      */
-    this.difficulty = 1;
-    // For now, just reset the game WPM and speed to default values.
-    this.wpm = 30;
-    this.speed = 1;
+    this.difficulty = this.difficulties["easy"];
 
     this.words = [];
     this.userInputText = "";
@@ -53,7 +55,7 @@ GameController.prototype.reset = function() {
 GameController.prototype.start = function() {
     this.gameInProgress = true;
 
-    this.wordGenerationIntervalId = window.setInterval(() => { this.generateWord(); }, 60000 / this.wpm);
+    this.wordGenerationIntervalId = window.setInterval(() => { this.generateWord(); }, 60000 / this.difficulty.wpm);
     window.requestAnimationFrame(() => { frameFn(); });
 
     // Make sure to use the arrow function here to make the current context accessible inside the nested function.
@@ -63,7 +65,7 @@ GameController.prototype.start = function() {
         // Recursively call the frameFn function to keep the frame request going as long as the game is in progress
         if(this.gameInProgress) window.requestAnimationFrame(frameFn);
     }
-
+    $("#difficulty-selection-button").trigger("click");
     this.timer.start();
 }
 
@@ -140,8 +142,8 @@ GameController.prototype.executeFrameActions = function() {
     for(let i = this.words.length-1 ; i >= 0 ; --i) {
         let word = this.words[i];
         // Bonus word moves down quicker than normal words
-        if(word.isBonus) word.y += this.speed + 1;
-        else word.y += this.speed;
+        if(word.isBonus) word.y += this.difficulty.speed + 1;
+        else word.y += this.difficulty.speed;
         // Remove the word from this.words array if it reaches the bottom
         if (word.y > this.canvas.getHeight()) { 
             this.words.splice(i,1);
@@ -153,7 +155,7 @@ GameController.prototype.executeFrameActions = function() {
 
 
     // Draw on the canvas
-    this.canvas.draw(this.words, this.player.score, this.player.lives, this.getPlayerWPM(), this.difficulty);
+    this.canvas.draw(this.words, this.player.score, this.player.lives, this.getPlayerWPM(), this.difficulty.name);
 
     // If the player lives is zero, end the game
     if(this.player.lives <= 0) this.stop(true);

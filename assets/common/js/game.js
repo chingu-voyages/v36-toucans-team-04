@@ -3,9 +3,6 @@ const gameController = new GameController();
 // Set the canvas height and width based on the current body size.
 resetCanvasSize();
 
-// Start the game
-gameController.start();
-
 // Add event listeners for the BACK button
 $(".fa-arrow-left").on("click", () => { window.location.href = "index.html"; });
 $("#back-button-container").on("mouseenter", function() { $(this).addClass("animate__animated animate__headShake"); });
@@ -19,7 +16,20 @@ $("#difficulty-selection-button").on("click", function() {
 // Add event listener for the Difficulty selector button
 $("#save-settings-btn").on("click", function() {
     const select = document.querySelector("#difficulty-drop-down");
-    console.log("Difficulty selected " + select[select.selectedIndex].value);
+    //console.log("Difficulty selected " + select[select.selectedIndex].value);
+    const selectedDifficulty = select[select.selectedIndex].value;
+    $("#difficulty-selection-modal").modal("hide");
+    gameController.difficulty = gameController.difficulties[selectedDifficulty];
+});
+
+$("#cancel-save-settings").on("click", function() {
+    const select = document.querySelector("#difficulty-drop-down");
+    select.value = gameController.difficulty.name.toLowerCase();
+});
+
+// Add event listener for the Difficulty selector button
+$("#save-settings-btn").on("click", function() {
+    const select = document.querySelector("#difficulty-drop-down");
 });
 
 // Add event listener for the END Game button on the game page
@@ -98,3 +108,6 @@ function resetCanvasSize() {
         ($(window).height() || $("body").height()) - $("#nav-bar").height() - $("#text-display-container").height() - 22
     );
 }
+
+// Start the game
+gameController.start();
