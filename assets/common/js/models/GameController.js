@@ -189,7 +189,9 @@ GameController.prototype.generateWord = function() {
 
     // Every 100th word is a bonus word
     if(this.numWordsSpawned % 100 == 0 && this.numWordsSpawned > 0) {
-        this.words.push(new Word(this.dictionary.getRandomWordForDifficulty(this.gameDifficulty), x, true));
+        let difficultyObj = new GameDifficulty();
+        difficultyObj.initialize(this.gameDifficulty.difficulty + 1);
+        this.words.push(new Word(this.dictionary.getRandomWordForDifficulty(difficultyObj), x, true));
     } else {
         this.words.push(new Word(text, x));
     }
