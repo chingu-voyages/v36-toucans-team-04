@@ -195,7 +195,7 @@ GameController.prototype.updateHighlightInd = function() {
  * Add a random word to the words array
  */
 GameController.prototype.generateWord = function() {
-    const text = this.dictionary.getRandomWordForDifficulty(this.gameDifficulty);
+    const text = this.dictionary.getRandomWordForDifficulty(this.gameDifficulty.difficulty);
     const textWidth = this.canvas.get2DContext().measureText(text).width;
 
     // Give left and right padding to prevent words from overlaping with UI components
