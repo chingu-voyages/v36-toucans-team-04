@@ -283,7 +283,7 @@ GameController.prototype.getPlayerPerformanceData = function() {
     // This elapsed time format will be correct as long as the duration doesn't exceed a day
     obj["elapsed-time"] = new Date(this.timer.getElapsedTime()).toISOString().slice(11,19);
     obj["score"] = this.player.score;
-    obj["highest-difficulty"] = this.difficulty;
+    obj["highest-difficulty"] = this.gameDifficulty.difficulty;
     obj["player-wpm"] = this.getPlayerWPM().toFixed(2);
     obj["num-backspaces"] = this.player.numBackspaces;
     obj["num-bonus"] = this.player.numBonus;
