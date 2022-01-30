@@ -113,6 +113,7 @@ GameController.prototype.enterWord = function() {
 GameController.prototype.enterCharacter = function(charCode) {
     // This is a backspace
     if(charCode === 8) { // Remove the last character in userInputText
+        if(this.userInputText.length > 0) this.player.numBackspaces++;
         this.userInputText = this.userInputText.slice(0, -1);
     }
     else { // Push the input character to userInputText
@@ -282,7 +283,9 @@ GameController.prototype.getPlayerPerformanceData = function() {
     // This elapsed time format will be correct as long as the duration doesn't exceed a day
     obj["elapsed-time"] = new Date(this.timer.getElapsedTime()).toISOString().slice(11,19);
     obj["score"] = this.player.score;
+    obj["highest-difficulty"] = this.difficulty;
     obj["player-wpm"] = this.getPlayerWPM().toFixed(2);
+    obj["num-backspaces"] = this.player.numBackspaces;
     obj["num-bonus"] = this.player.numBonus;
     obj["num-words-total"] = totalWords;
     obj["num-words-correct"] = this.player.numCorrectWords;
