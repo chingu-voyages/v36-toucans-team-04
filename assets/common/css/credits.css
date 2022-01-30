@@ -73,6 +73,15 @@ ul {
     color: #141414;
 }
 
+.github a {
+    color: #141414;
+    text-decoration: none;
+}
+
+.github a:hover {
+    text-decoration: underline;
+}
+
 @media screen and (max-width: 1600px) {
     main {
         width: 50%;
