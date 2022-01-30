@@ -1,0 +1,133 @@
+body {
+    background-image: url("../../images/background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-family: arial;
+
+    display: grid;
+    grid-template-columns: auto 50% auto;
+    grid-template-areas: ". content .";
+}
+
+#menu-link {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    color: black;
+    text-decoration: none;
+
+    background-color: rgb(255, 255, 255);
+    border-radius: 50px;
+    padding: 0.5em 1em;
+}
+
+main {
+    background: rgb(36, 124, 240);
+    color: white;
+
+    grid-area: content;
+    align-self: center;
+
+    padding: 1em;
+    margin: 4em 2em;
+
+    display: grid;
+    grid-template-rows: repeat(auto-fit, 1fr);
+    row-gap: 1em;
+    border-radius: 10px;
+}
+
+main h1, section h2 {
+    margin: 0;
+    text-transform: uppercase;
+}
+
+section h2 {
+    font-size: 1em;
+    font-weight: bold;
+}
+
+main h1 {
+    font-size: 3em;
+    text-align: center;
+}
+
+section {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.figure {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.circle {
+    background: rgb(232, 242, 230);
+    border-radius: 50%;
+    text-transform: uppercase;
+    font-size: 1.5em;
+    aspect-ratio: 1 / 1;
+    color: blue;
+    width: 150px;
+    margin: 0.5em;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+hr {
+    border: 1px white solid;
+    width: 100%;
+}
+
+@media screen and (max-width: 1600px) {
+    body {
+        grid-template-columns: auto 70% auto;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    body {
+        grid-template-columns: auto 80% auto;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    body {
+        grid-template-columns: auto 90% auto;
+    }
+
+    section {
+        grid-template-areas:
+            ". figure. "
+            ". text1. "
+            ". text2. ";
+        
+        row-gap: 1em;
+    }
+
+    .figure {
+        grid-area: figure;
+    }
+
+    .text:first-child {
+        grid-area: text1;
+    }
+
+    .text:last-child {
+        grid-area: text2;
+    }
+}
