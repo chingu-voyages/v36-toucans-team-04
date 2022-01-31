@@ -1,5 +1,5 @@
 const gameController = new GameController();
-let selectedDifficulty = queryString = location.search.substring(1);
+let selectedDifficulty = location.search.substring(1);
 
 // Set the canvas height and width based on the current body size.
 resetCanvasSize();
