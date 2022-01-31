@@ -3,8 +3,7 @@ function GameController() {
     this.timer = new Timer();
     this.player = new Player();
     this.dictionary = new Dictionary();
-
-    this.difficulty = 1;
+    this.gameDifficulty = new GameDifficulty(); 
     this.gameInProgress = false;
     this.wpm = 30;
     this.words = [];
@@ -37,10 +36,10 @@ GameController.prototype.reset = function() {
      * we may create an object for managing the difficulty levels and allow that object to set the wpm and speed
      * based on the difficulty selected.
      */
-    this.difficulty = 1;
+    this.gameDifficulty.difficulty = 1;
     // For now, just reset the game WPM and speed to default values.
-    this.wpm = 30;
-    this.speed = 1;
+    this.wpm = this.gameDifficulty.getWPM();
+    this.speed = this.gameDifficulty.getSpeed();
 
     this.words = [];
     this.userInputText = "";
@@ -52,6 +51,20 @@ GameController.prototype.reset = function() {
  */
 GameController.prototype.start = function() {
     this.gameInProgress = true;
+
+    /*
+     * Fill subdictionary for each difficulty level.
+     * It is filled before the beginning of the game in order to achieve a smooth 
+     * transition between difficulties while the game is in progress.
+     */
+    this.dictionary.initialize();
+
+    // Initialize difficulty
+    this.gameDifficulty.initialize(1);
+    
+    // Make wpm and speed of the game match with the difficulty
+    this.wpm = this.gameDifficulty.getWPM();
+    this.speed = this.gameDifficulty.getSpeed();
 
     this.wordGenerationIntervalId = window.setInterval(() => { this.generateWord(); }, 60000 / this.wpm);
     window.requestAnimationFrame(() => { frameFn(); });
@@ -137,6 +150,11 @@ GameController.prototype.getPlayerWPM = function() {
  * Function to execute all operations in each frame
  */
 GameController.prototype.executeFrameActions = function() {
+    
+    // Make wpm and speed of the game match with the current difficulty
+    this.wpm = this.gameDifficulty.getWPM();
+    this.speed = this.gameDifficulty.getSpeed();
+
     // Move all the words down
     for(let i = this.words.length-1 ; i >= 0 ; --i) {
         let word = this.words[i];
@@ -154,7 +172,7 @@ GameController.prototype.executeFrameActions = function() {
 
 
     // Draw on the canvas
-    this.canvas.draw(this.words, this.player.score, this.player.lives, this.getPlayerWPM(), this.difficulty);
+    this.canvas.draw(this.words, this.player.score, this.player.lives, this.getPlayerWPM(), this.gameDifficulty.difficulty);
 
     // If the player lives is zero, end the game
     if(this.player.lives <= 0) this.stop(true);
@@ -178,7 +196,7 @@ GameController.prototype.updateHighlightInd = function() {
  * Add a random word to the words array
  */
 GameController.prototype.generateWord = function() {
-    const text = this.dictionary.getRandomWord();
+    const text = this.dictionary.getRandomWordForDifficulty(this.gameDifficulty.difficulty);
     const textWidth = this.canvas.get2DContext().measureText(text).width;
 
     // Give left and right padding to prevent words from overlaping with UI components
