@@ -164,7 +164,7 @@ GameController.prototype.executeFrameActions = function() {
         // Remove the word from this.words array if it reaches the bottom
         if (word.y > this.canvas.getHeight()) { 
             this.words.splice(i,1);
-            if(!word.isBonus()) this.player.missWord();
+            if(!word.isBonus) this.player.missWord();
             this.updateTextBox();
         }
     }
@@ -196,7 +196,7 @@ GameController.prototype.updateHighlightInd = function() {
  * Add a random word to the words array
  */
 GameController.prototype.generateWord = function() {
-    const text = this.dictionary.getRandomWordForDifficulty(this.gameDifficulty.difficulty);
+    let text = this.dictionary.getRandomWordForDifficulty(this.gameDifficulty.difficulty);
     const textWidth = this.canvas.get2DContext().measureText(text).width;
 
     // Give left and right padding to prevent words from overlaping with UI components
