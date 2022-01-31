@@ -1,5 +1,5 @@
 const gameController = new GameController();
-let selectedDifficulty = location.search.substring(1);
+const selectedDifficulty = location.search.substring(1);
 
 // Set the canvas height and width based on the current body size.
 resetCanvasSize();
@@ -24,12 +24,20 @@ $("#confirm-end-game-btn").on("click", function() {
 })
 
 // Add event listener for the Restart Game button on the game over modal
-$("#modal-restart-game-btn").on("click", function() {
+$(".restart-btn").on("click", function() {
     $("#game-over-modal").modal("hide");
     $("#text-display").html("");
     resetCanvasSize();
+
+    let playedDifficulty = gameController.gameDifficulty.difficulty;
     gameController.reset();
-    gameController.start();
+    
+    if($(this).attr("id") == "modal-restart-last-selected-btn") {
+        gameController.start(selectedDifficulty);
+    }
+    if($(this).attr("id") == "modal-restart-last-played-btn") {
+        gameController.start(playedDifficulty);
+    }
 });
 
 // Capture the player key press and send the input to the game controller
