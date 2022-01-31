@@ -1,10 +1,11 @@
 const gameController = new GameController();
+let selectedDifficulty = location.search.substring(1);
 
 // Set the canvas height and width based on the current body size.
 resetCanvasSize();
 
 // Start the game
-gameController.start();
+gameController.start(selectedDifficulty == "" ? 1 : selectedDifficulty);
 
 // Add event listeners for the BACK button
 $(".fa-arrow-left").on("click", () => { window.location.href = "index.html"; });

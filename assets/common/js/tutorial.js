@@ -20,4 +20,8 @@ canvases.forEach((cnvs,index) => {
 	ctx.fillText('Difficulty ' + canvasNum, 5, 35)
 	ctx.fillText('WPM: ' + cnvs.wpm, 5, 65)
 	diffs.appendChild(canvas)
+
+	canvas.addEventListener("click", () => {
+		window.location.href = `game.html?${index + 1}`;
+	});
 })
