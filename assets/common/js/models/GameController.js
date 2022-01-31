@@ -49,7 +49,7 @@ GameController.prototype.reset = function() {
 /**
  * Start the game.
  */
-GameController.prototype.start = function() {
+GameController.prototype.start = function(difficultyLevel = 1) {
     this.gameInProgress = true;
 
     /*
@@ -60,7 +60,7 @@ GameController.prototype.start = function() {
     this.dictionary.initialize();
 
     // Initialize difficulty
-    this.gameDifficulty.initialize(1);
+    this.gameDifficulty.initialize(difficultyLevel);
     
     // Make wpm and speed of the game match with the difficulty
     this.wpm = this.gameDifficulty.getWPM();
