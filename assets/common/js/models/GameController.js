@@ -146,7 +146,7 @@ GameController.prototype.executeFrameActions = function() {
         // Remove the word from this.words array if it reaches the bottom
         if (word.y > this.canvas.getHeight()) { 
             this.words.splice(i,1);
-            this.player.missWord();
+            if(!word.isBonus()) this.player.missWord();
             this.updateTextBox();
         }
     }
