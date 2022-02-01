@@ -1,16 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
-	<title></title>
+        <title></title>
 
-	<link rel="stylesheet" href="assets/common/css/reset.css">
-	<link rel="stylesheet" href="assets/common/css/tutorial.css">
-</head>
-<body>
-	<script src="assets/common/js/tutorial.js"></script>
-</body>
+        <link rel="stylesheet" href="assets/common/css/reset.css" />
+        <link rel="stylesheet" href="assets/common/css/tutorial.css" />
+    </head>
+    <body>
+        <div id="tutorial">
+            <!--1-->
+            <div class="tutorial-page">
+                <div class="text">
+                    <h2 class="tutorial-page-title">Welcome to Falling Words</h2>
+                    <p class="tutorial-page-body">The game that increases your typing speed!!!</p>
+                </div>
+                <div class="image">
+                    <img
+                        src="assets/images/landingPage.png"
+                        alt="sometutorialimage"
+                        class="tutorial-page-image"
+                    />
+                </div>
+            </div>
+            <!--2-->
+            <div class="tutorial-page">
+                <div class="text">
+                    <h2 class="tutorial-page-title">The goal</h2>
+                    <p class="tutorial-page-body">Type as many words as you can</p>
+                    <p class="tutorial-page-body">Typing a word correctly gives you points</p>
+                    <p class="tutorial-page-body">
+                        Misstyping a word penalizes you taking a live away
+                    </p>
+                </div>
+                <div class="image">
+                    <img
+                        src="assets/images/mainFrame.png"
+                        alt="sometutorialimage"
+                        class="tutorial-page-image"
+                    />
+                </div>
+            </div>
+            <!--3-->
+            <div class="tutorial-page">
+                <div class="text">
+                    <h2 class="tutorial-page-title">Typebox (typing correctly)</h2>
+                    <p class="tutorial-page-body">
+                        Type box shows the characters that you are typing. If the text inside type
+                        box is matching the prefix of a word then it has a green background. The
+                        word inside the game also gets highlighted.
+                    </p>
+                </div>
+                <div class="image">
+                    <img
+                        src="assets/images/correctlyTyped.png"
+                        alt="sometutorialimage"
+                        class="tutorial-page-image"
+                    />
+                </div>
+            </div>
+            <!--4-->
+            <div class="tutorial-page">
+                <div class="text">
+                    <h2 class="tutorial-page-title">Typebox (mistyped)</h2>
+                    <p class="tutorial-page-body">
+                        If you misstype one or more characters typebox show a red background behind
+                        those characters. The word inside the game is not highlighted unless you
+                        correct those mistyped characters.
+                    </p>
+                </div>
+                <div class="image">
+                    <img
+                        src="assets/images/mistyped.png"
+                        alt="sometutorialimage"
+                        class="tutorial-page-image"
+                    />
+                </div>
+            </div>
+            <!--5-->
+            <div class="tutorial-page">
+                <div class="text">
+                    <h2 class="tutorial-page-title">In-game information</h2>
+                    <p class="tutorial-page-body">
+                        The game shows current game difficulty, your current score, typing speed and
+                        remaining lives
+                    </p>
+                </div>
+                <div class="image">
+                    <img
+                        src="assets/images/info.png"
+                        alt="sometutorialimage"
+                        class="tutorial-page-image"
+                    />
+                    <img
+                        src="assets/images/difficulty.png"
+                        alt="sometutorialimage"
+                        class="tutorial-page-image"
+                    />
+                </div>
+            </div>
+            <!--5-->
+            <div class="tutorial-page">
+                <div class="text">
+                    <h2 class="tutorial-page-title">Bonus words</h2>
+                    <p class="tutorial-page-body">
+                        Blue words are bonus words. They are considerably faster than normal ones
+                        and if you type one of them correctly you get a live. You can ignore them as
+                        they don't penalize you when reaching the bottom of the screen.
+                    </p>
+                </div>
+                <div class="image">
+                    <img
+                        src="assets/images/bonusWord.png"
+                        alt="sometutorialimage"
+                        class="tutorial-page-image"
+                    />
+                </div>
+            </div>
+        </div>
+
+        <div id="difficulties"></div>
+        <script src="assets/common/js/tutorial.js"></script>
+    </body>
 </html>

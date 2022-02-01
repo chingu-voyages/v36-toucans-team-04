@@ -3,8 +3,7 @@ function GameController() {
     this.timer = new Timer();
     this.player = new Player();
     this.dictionary = new Dictionary();
-
-    this.difficulty = 1;
+    this.gameDifficulty = new GameDifficulty(); 
     this.gameInProgress = false;
     this.wpm = 30;
     this.words = [];
@@ -37,10 +36,10 @@ GameController.prototype.reset = function() {
      * we may create an object for managing the difficulty levels and allow that object to set the wpm and speed
      * based on the difficulty selected.
      */
-    this.difficulty = 1;
+    this.gameDifficulty.difficulty = 1;
     // For now, just reset the game WPM and speed to default values.
-    this.wpm = 30;
-    this.speed = 1;
+    this.wpm = this.gameDifficulty.getWPM();
+    this.speed = this.gameDifficulty.getSpeed();
 
     this.words = [];
     this.userInputText = "";
@@ -50,8 +49,23 @@ GameController.prototype.reset = function() {
 /**
  * Start the game.
  */
-GameController.prototype.start = function() {
+GameController.prototype.start = function(difficultyLevel = 1) {
     this.gameInProgress = true;
+    difficultyLevel = parseInt(difficultyLevel);
+
+    /*
+     * Fill subdictionary for each difficulty level.
+     * It is filled before the beginning of the game in order to achieve a smooth 
+     * transition between difficulties while the game is in progress.
+     */
+    this.dictionary.initialize();
+
+    // Initialize difficulty
+    this.gameDifficulty.initialize(difficultyLevel);
+    
+    // Make wpm and speed of the game match with the difficulty
+    this.wpm = this.gameDifficulty.getWPM();
+    this.speed = this.gameDifficulty.getSpeed();
 
     this.wordGenerationIntervalId = window.setInterval(() => { this.generateWord(); }, 60000 / this.wpm);
     window.requestAnimationFrame(() => { frameFn(); });
@@ -113,6 +127,7 @@ GameController.prototype.enterWord = function() {
 GameController.prototype.enterCharacter = function(charCode) {
     // This is a backspace
     if(charCode === 8) { // Remove the last character in userInputText
+        if(this.userInputText.length > 0) this.player.numBackspaces++;
         this.userInputText = this.userInputText.slice(0, -1);
     }
     else { // Push the input character to userInputText
@@ -136,6 +151,11 @@ GameController.prototype.getPlayerWPM = function() {
  * Function to execute all operations in each frame
  */
 GameController.prototype.executeFrameActions = function() {
+    
+    // Make wpm and speed of the game match with the current difficulty
+    this.wpm = this.gameDifficulty.getWPM();
+    this.speed = this.gameDifficulty.getSpeed();
+
     // Move all the words down
     for(let i = this.words.length-1 ; i >= 0 ; --i) {
         let word = this.words[i];
@@ -145,7 +165,7 @@ GameController.prototype.executeFrameActions = function() {
         // Remove the word from this.words array if it reaches the bottom
         if (word.y > this.canvas.getHeight()) { 
             this.words.splice(i,1);
-            this.player.missWord();
+            if(!word.isBonus) this.player.missWord();
             this.updateTextBox();
         }
     }
@@ -153,7 +173,7 @@ GameController.prototype.executeFrameActions = function() {
 
 
     // Draw on the canvas
-    this.canvas.draw(this.words, this.player.score, this.player.lives, this.getPlayerWPM(), this.difficulty);
+    this.canvas.draw(this.words, this.player.score, this.player.lives, this.getPlayerWPM(), this.gameDifficulty.difficulty);
 
     // If the player lives is zero, end the game
     if(this.player.lives <= 0) this.stop(true);
@@ -177,7 +197,7 @@ GameController.prototype.updateHighlightInd = function() {
  * Add a random word to the words array
  */
 GameController.prototype.generateWord = function() {
-    const text = this.dictionary.getRandomWord();
+    let text = this.dictionary.getRandomWordForDifficulty(this.gameDifficulty.difficulty);
     const textWidth = this.canvas.get2DContext().measureText(text).width;
 
     // Give left and right padding to prevent words from overlaping with UI components
@@ -188,6 +208,8 @@ GameController.prototype.generateWord = function() {
 
     // Every 100th word is a bonus word
     if(this.numWordsSpawned % 100 == 0 && this.numWordsSpawned > 0) {
+        let level = this.gameDifficulty.difficulty == 5 ? 5 : this.gameDifficulty.difficulty + 1;
+        text = this.dictionary.getRandomWordForDifficulty(level);
         this.words.push(new Word(text, x, true));
     } else {
         this.words.push(new Word(text, x));
@@ -282,7 +304,9 @@ GameController.prototype.getPlayerPerformanceData = function() {
     // This elapsed time format will be correct as long as the duration doesn't exceed a day
     obj["elapsed-time"] = new Date(this.timer.getElapsedTime()).toISOString().slice(11,19);
     obj["score"] = this.player.score;
+    obj["highest-difficulty"] = this.gameDifficulty.difficulty;
     obj["player-wpm"] = this.getPlayerWPM().toFixed(2);
+    obj["num-backspaces"] = this.player.numBackspaces;
     obj["num-bonus"] = this.player.numBonus;
     obj["num-words-total"] = totalWords;
     obj["num-words-correct"] = this.player.numCorrectWords;
