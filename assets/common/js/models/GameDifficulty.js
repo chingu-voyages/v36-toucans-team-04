@@ -53,13 +53,6 @@ function GameDifficulty() {
 }
 
 /**
- * Initialize difficulty
- */
-GameDifficulty.prototype.initialize = function (difficulty) {
-    this.difficulty = difficulty;
-};
-
-/**
  * Return the wpm that corresponds to the current difficulty
  * @returns {number} the current wpm 
  */
@@ -93,3 +86,41 @@ GameDifficulty.prototype.getMaxWordLength = function () {
 GameDifficulty.prototype.getCapWordProb = function () {
     return this.parameters[this.difficulty - 1].capWordProb;
 };
+
+
+/**
+ * Increase the game difficulty by one level until reaching the max level
+ */
+GameDifficulty.prototype.increase = function() {
+    if(this.getCurrentLevel() < this.getMaxLevel()) this.difficulty ++;
+}
+
+
+/**
+ * Return the current difficulty level
+ * @returns {number} the current difficulty level
+ */
+GameDifficulty.prototype.getCurrentLevel = function() {
+    return parseInt(this.difficulty);
+}
+
+
+/**
+ * Set the current level to the given level value
+ * @param {number} currentLevel the current level value
+ */
+GameDifficulty.prototype.setCurrentLevel = function(currentLevel) {
+    if(currentLevel > this.getMaxLevel || currentLevel < 0) {
+        throw "Invalid current level value passed to setCurrentLevel function in GameDifficulty.js.";
+    }
+    this.difficulty = parseInt(currentLevel);
+}
+
+
+/**
+ * Return the maximum level for the game
+ * @returns {number} get the maximum level
+ */
+GameDifficulty.prototype.getMaxLevel = function() {
+    return this.parameters.length;
+}
