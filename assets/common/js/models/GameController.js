@@ -44,7 +44,6 @@ GameController.prototype.reset = function() {
  */
 GameController.prototype.start = function(difficultyLevel = 1) {
     this.gameInProgress = true;
-    difficultyLevel = parseInt(difficultyLevel);
 
     /*
      * Fill subdictionary for each difficulty level.
