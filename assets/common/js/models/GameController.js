@@ -70,7 +70,7 @@ GameController.prototype.start = function(difficultyLevel = 1) {
         // Reset the word generation interval with the new WPM
         window.clearInterval(this.wordGenerationIntervalId);
         this.wordGenerationIntervalId = wordGenerationFn();
-    }, 90000);
+    }, 60000);
 
     // Start the game frame request
     window.requestAnimationFrame(() => { frameFn(); });
