@@ -29,9 +29,7 @@ GameController.prototype.reset = function() {
     this.canvas.clear();
     this.timer.reset();
 
-    /**
-     * Initialize game 
-     */
+    // Initialize game difficulty
     this.gameDifficulty.setCurrentLevel(1);
 
     this.words = [];
@@ -55,10 +53,26 @@ GameController.prototype.start = function(difficultyLevel = 1) {
     // Initialize difficulty
     this.gameDifficulty.setCurrentLevel(difficultyLevel);
 
-    this.wordGenerationIntervalId = window.setInterval(() => { this.generateWord(); }, 60000 / this.gameDifficulty.getWPM());
+    // Function that sets Word Generation Interval
+    const wordGenerationFn = () => {
+        return window.setInterval(() => { 
+            this.generateWord(); }, 60000 / this.gameDifficulty.getWPM()
+        );
+    }
+
+    // Set the word generation interval
+    this.wordGenerationIntervalId = wordGenerationFn();
+
+    // Set the difficulty level increase interval
     this.difficultyLevelIntervalId = window.setInterval(() => {
         this.gameDifficulty.increase();
-    }, 60000);
+
+        // Reset the word generation interval with the new WPM
+        window.clearInterval(this.wordGenerationIntervalId);
+        this.wordGenerationIntervalId = wordGenerationFn();
+    }, 90000);
+
+    // Start the game frame request
     window.requestAnimationFrame(() => { frameFn(); });
 
     // Make sure to use the arrow function here to make the current context accessible inside the nested function.

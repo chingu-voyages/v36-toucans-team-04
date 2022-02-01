@@ -29,7 +29,7 @@ $(".restart-btn").on("click", function() {
     $("#text-display").html("");
     resetCanvasSize();
 
-    let playedDifficulty = gameController.gameDifficulty.difficulty;
+    let playedDifficulty = gameController.gameDifficulty.getCurrentLevel();
     gameController.reset();
     
     if($(this).attr("id") == "modal-restart-last-selected-btn") {
