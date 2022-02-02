@@ -13,41 +13,81 @@ function GameDifficulty() {
         // Difficulty 1
         {
             wpm: 20,
-            speed: 0.25,
-            maxWordLength: 4,
-            capWordProb: 0.1,
+            speed: 1.5,
+            maxWordLength: 3,
+            capWordProb: 0,
         },
 
         // Difficulty 2
         {
-            wpm: 30,
-            speed: 0.5,
-            maxWordLength: 5,
-            capWordProb: 0.2,
+            wpm: 25,
+            speed: 1.6,
+            maxWordLength: 4,
+            capWordProb: 0,
         },
 
         // Difficulty 3
         {
-            wpm: 40,
-            speed: 0.75,
-            maxWordLength: 6,
-            capWordProb: 0.3,
+            wpm: 30,
+            speed: 1.7,
+            maxWordLength: 5,
+            capWordProb: 0,
         },
 
         // Difficulty 4
         {
-            wpm: 50,
-            speed: 0.8,
-            maxWordLength: 7,
-            capWordProb: 0.4,
+            wpm: 40,
+            speed: 1.8,
+            maxWordLength: 5,
+            capWordProb: 0.1,
         },
 
         // Difficulty 5
         {
+            wpm: 45,
+            speed: 1.9,
+            maxWordLength: 6,
+            capWordProb: 0.2,
+        },
+
+        // Difficulty 6
+        {
+            wpm: 50,
+            speed: 2,
+            maxWordLength: 7,
+            capWordProb: 0.2,
+        },
+
+        // Difficulty 7
+        {
             wpm: 60,
-            speed: 1,
+            speed: 2.1,
             maxWordLength: 8,
+            capWordProb: 0.3,
+        },
+
+        // Difficulty 8
+        {
+            wpm: 65,
+            speed: 2.2,
+            maxWordLength: 9,
+            capWordProb: 0.4,
+        },
+
+        // Difficulty 9
+        {
+            wpm: 70,
+            speed: 2.3,
+            maxWordLength: 10,
             capWordProb: 0.5,
+        },
+
+        // Difficulty 10
+        {
+            wpm: 80,
+            speed: 2.5,
+            maxWordLength: 11,
+            capWordProb: 0.6
         },
     ];
 }
