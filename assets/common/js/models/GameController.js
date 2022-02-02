@@ -1,3 +1,12 @@
+// Type constants used for posting message to web worker
+const WORD_GENERATION = "WORD_GENERATION";
+const GAME_FRAME = "GAME_FRAME";
+const DIFFICULTY_LEVEL = "DIFFICULTY_LEVEL";
+
+// Action constants used for posting message to web worker
+const START = "START";
+const STOP = "STOP";
+
 function GameController() {
     this.canvas = new Canvas();
     this.timer = new Timer();
@@ -7,11 +16,12 @@ function GameController() {
     this.gameInProgress = false;
     this.words = [];
     this.userInputText = "";
-
-    this.wordGenerationIntervalId = null;
-    this.difficultyLevelIntervalId = null;
-
     this.numWordsSpawned = 0;
+    this.intervalWebWorker = null;
+
+    if(window.Worker) {
+        this.intervalWebWorker = new Worker("./assets/common/js/webworkers/GameInterval.js");
+    }
 }
 
 /**
@@ -53,34 +63,29 @@ GameController.prototype.start = function(difficultyLevel = 1) {
     // Initialize difficulty
     this.gameDifficulty.setCurrentLevel(difficultyLevel);
 
-    // Function that sets Word Generation Interval
-    const wordGenerationFn = () => {
-        return window.setInterval(() => { 
-            this.generateWord(); }, 60000 / this.gameDifficulty.getWPM()
-        );
-    }
+    // Post Start action messages to the web worker
+    this.intervalWebWorker.postMessage([START, WORD_GENERATION, 60000 / this.gameDifficulty.getWPM()]);
+    this.intervalWebWorker.postMessage([START, GAME_FRAME, 1000 / 60]);
+    this.intervalWebWorker.postMessage([START, DIFFICULTY_LEVEL, 60000]);
 
-    // Set the word generation interval
-    this.wordGenerationIntervalId = wordGenerationFn();
+    // Upon receiving a response back from the web worker, execute actions
+    this.intervalWebWorker.onmessage = (e) => {
+        // The response is for the word generation interval
+        if(e.data == WORD_GENERATION) {
+            this.generateWord();
+        }
 
-    // Set the difficulty level increase interval
-    this.difficultyLevelIntervalId = window.setInterval(() => {
-        this.gameDifficulty.increase();
+        // The response is for the difficulty level increase interval
+        if(e.data == DIFFICULTY_LEVEL) {
+            this.gameDifficulty.increase();
+            this.intervalWebWorker.postMessage([STOP, WORD_GENERATION]);
+            this.intervalWebWorker.postMessage([START, WORD_GENERATION, 60000 / this.gameDifficulty.getWPM()]);
+        }
 
-        // Reset the word generation interval with the new WPM
-        window.clearInterval(this.wordGenerationIntervalId);
-        this.wordGenerationIntervalId = wordGenerationFn();
-    }, 60000);
-
-    // Start the game frame request
-    window.requestAnimationFrame(() => { frameFn(); });
-
-    // Make sure to use the arrow function here to make the current context accessible inside the nested function.
-    const frameFn = () => {
-        this.executeFrameActions();
-
-        // Recursively call the frameFn function to keep the frame request going as long as the game is in progress
-        if(this.gameInProgress) window.requestAnimationFrame(frameFn);
+        // The response is for the game frame interval
+        if(e.data == GAME_FRAME) {
+            this.executeFrameActions();
+        }
     }
 
     this.timer.start();
@@ -91,11 +96,10 @@ GameController.prototype.start = function(difficultyLevel = 1) {
  * @return {boolean} Should this function fire the gameover event and send a message to the interface?
  */
 GameController.prototype.stop = function(fireEvent) {
-    // Clear the word generation interval
-    window.clearInterval(this.wordGenerationIntervalId);
-    window.clearInterval(this.difficultyLevelIntervalId);
-    this.wordGenerationIntervalId = null;
-    this.difficultyLevelIntervalId = null;
+    // Issue stop messages to the web worker
+    this.intervalWebWorker.postMessage([STOP, GAME_FRAME]);
+    this.intervalWebWorker.postMessage([STOP, WORD_GENERATION]);
+    this.intervalWebWorker.postMessage([STOP, DIFFICULTY_LEVEL]);
 
     this.gameInProgress = false;
     this.timer.stop();
