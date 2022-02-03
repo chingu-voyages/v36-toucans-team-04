@@ -5,20 +5,36 @@ const canvasWidth = 150;
 const gameDifficulty = new GameDifficulty();
 let difficulties = gameDifficulty.parameters; 
 
-difficulties.forEach((difficulty,index) => {
-	let canvas = document.createElement('canvas')
-	let canvasNum = index + 1
-	let ctx = canvas.getContext('2d')
-	canvas.setAttribute('height', canvasHeight + 'px')
-	canvas.setAttribute('width', canvasWidth + 'px')
-	canvas.setAttribute('id', 'diff' + canvasNum)
-	ctx.font = '3em Arial'
-	ctx.fillStyle = '#FF0000'
-	ctx.fillText('Difficulty ' + canvasNum, 5, 35)
-	ctx.fillText('WPM: ' + difficulty.wpm, 5, 65)
-	diffs.appendChild(canvas)
+const gameController = new GameControllerDummy();
 
-	canvas.addEventListener("click", () => {
+difficulties.forEach((difficulty,index) => {
+	let div = document.createElement('div');
+	let divNum = index + 1;
+	div.setAttribute('id', divNum);
+	div.setAttribute('class', 'difficulty-selector');
+	diffs.appendChild(div);
+	div.innerHTML = "<div class='inner-difficulty-selector'><p>Difficulty " + divNum + "</p>" + "\n <p>WPM: " + difficulty.wpm + "</p></div>";
+	div.addEventListener("click", () => {
 		window.location.href = `game.html?${index + 1}`;
 	});
 })
+
+$(".difficulty-selector").hover(function(){
+	startDemoForDifficulty(parseInt($(this).attr("id")));
+}, function() {
+	finishDemoForDifficulty();
+});
+
+function startDemoForDifficulty(selectedDifficulty) {
+	$(".canvas-example").addClass("active");
+	// Setting canvas 
+  $("#canvas").prop("width", ($("#canvas").width()));
+  $("#canvas").prop("height", ($("#canvas").height()));
+
+	gameController.start(selectedDifficulty == "" ? 1 : selectedDifficulty);
+}
+
+function finishDemoForDifficulty() {
+	$(".canvas-example").removeClass("active");
+	gameController.reset();
+}

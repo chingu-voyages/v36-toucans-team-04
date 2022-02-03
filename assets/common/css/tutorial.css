@@ -4,6 +4,11 @@
     border: 0;
 }
 
+:root {
+    --dark-wood-color: #815438;
+    --light-wood-color: #caa472;
+}
+
 body {
     background-image: url("../../images/background.jpg");
     height: 100vh;
@@ -13,7 +18,7 @@ body {
 }
 
 #tutorial {
-    height: 50%;
+    height: 70%;
     width: 80%;
     margin: 0 auto;
     background-color: rgba(0, 0, 0, 0.2);
@@ -99,17 +104,58 @@ body {
 }
 
 #difficulties {
-    height: 50%;
+    margin-top: 40px;
+    height: 20%;
     display: flex;
-    justify-content: space-around;
+    /* justify-content: space-around; */
 }
 
-canvas {
+.canvas-example {
+    visibility: hidden;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+    height: 70%;
+    width: 80%;
     background-color: #222222;
-    border: 5px solid #008800;
+    /* border: 5px var(--dark-wood-color) solid; */
 }
 
-canvas:hover {
-    background-color: #333333;
-    border: 5px solid #00ff00;
+.difficulty-selector {
+    background-color: var(--light-wood-color);
+    height: 100%;
+    width: 100%;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.inner-difficulty-selector {
+    box-sizing: border-box;
+    font-family: 'Bungee', cursive;
+    font-size: 1.5em;
+    font-weight: 900;
+    border: 5px var(--dark-wood-color) solid;
+    border-radius: 100%;
+    color: var(--dark-wood-color);
+    height: 95%;
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.inner-difficulty-selector:hover {
+    border: 5px white solid;
+    /* color: white; */
+}
+
+.inner-difficulty-selector p{
+    text-align: center;
+}
+
+.active {
+    visibility: visible;
 }
