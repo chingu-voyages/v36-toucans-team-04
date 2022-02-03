@@ -5,12 +5,11 @@ function GameController() {
     this.dictionary = new Dictionary();
     this.gameDifficulty = new GameDifficulty(); 
     this.gameInProgress = false;
-    this.wpm = 30;
     this.words = [];
     this.userInputText = "";
-    this.speed = 1;
 
     this.wordGenerationIntervalId = null;
+    this.difficultyLevelIntervalId = null;
 
     this.numWordsSpawned = 0;
 }
@@ -30,16 +29,8 @@ GameController.prototype.reset = function() {
     this.canvas.clear();
     this.timer.reset();
 
-    /**
-     * Once we implement different difficulty level, maybe we should reset to whatever
-     * difficulty the player originally selected. Also, since wpm, speed are all tied to the difficulty level
-     * we may create an object for managing the difficulty levels and allow that object to set the wpm and speed
-     * based on the difficulty selected.
-     */
-    this.gameDifficulty.difficulty = 1;
-    // For now, just reset the game WPM and speed to default values.
-    this.wpm = this.gameDifficulty.getWPM();
-    this.speed = this.gameDifficulty.getSpeed();
+    // Initialize game difficulty
+    this.gameDifficulty.setCurrentLevel(1);
 
     this.words = [];
     this.userInputText = "";
@@ -51,7 +42,6 @@ GameController.prototype.reset = function() {
  */
 GameController.prototype.start = function(difficultyLevel = 1) {
     this.gameInProgress = true;
-    difficultyLevel = parseInt(difficultyLevel);
 
     /*
      * Fill subdictionary for each difficulty level.
@@ -61,13 +51,28 @@ GameController.prototype.start = function(difficultyLevel = 1) {
     this.dictionary.initialize();
 
     // Initialize difficulty
-    this.gameDifficulty.initialize(difficultyLevel);
-    
-    // Make wpm and speed of the game match with the difficulty
-    this.wpm = this.gameDifficulty.getWPM();
-    this.speed = this.gameDifficulty.getSpeed();
+    this.gameDifficulty.setCurrentLevel(difficultyLevel);
 
-    this.wordGenerationIntervalId = window.setInterval(() => { this.generateWord(); }, 60000 / this.wpm);
+    // Function that sets Word Generation Interval
+    const wordGenerationFn = () => {
+        return window.setInterval(() => { 
+            this.generateWord(); }, 60000 / this.gameDifficulty.getWPM()
+        );
+    }
+
+    // Set the word generation interval
+    this.wordGenerationIntervalId = wordGenerationFn();
+
+    // Set the difficulty level increase interval
+    this.difficultyLevelIntervalId = window.setInterval(() => {
+        this.gameDifficulty.increase();
+
+        // Reset the word generation interval with the new WPM
+        window.clearInterval(this.wordGenerationIntervalId);
+        this.wordGenerationIntervalId = wordGenerationFn();
+    }, 60000);
+
+    // Start the game frame request
     window.requestAnimationFrame(() => { frameFn(); });
 
     // Make sure to use the arrow function here to make the current context accessible inside the nested function.
@@ -88,7 +93,9 @@ GameController.prototype.start = function(difficultyLevel = 1) {
 GameController.prototype.stop = function(fireEvent) {
     // Clear the word generation interval
     window.clearInterval(this.wordGenerationIntervalId);
+    window.clearInterval(this.difficultyLevelIntervalId);
     this.wordGenerationIntervalId = null;
+    this.difficultyLevelIntervalId = null;
 
     this.gameInProgress = false;
     this.timer.stop();
@@ -151,17 +158,14 @@ GameController.prototype.getPlayerWPM = function() {
  * Function to execute all operations in each frame
  */
 GameController.prototype.executeFrameActions = function() {
-    
-    // Make wpm and speed of the game match with the current difficulty
-    this.wpm = this.gameDifficulty.getWPM();
-    this.speed = this.gameDifficulty.getSpeed();
-
     // Move all the words down
     for(let i = this.words.length-1 ; i >= 0 ; --i) {
         let word = this.words[i];
+        let speed = this.gameDifficulty.getSpeed();
+
         // Bonus word moves down quicker than normal words
-        if(word.isBonus) word.y += this.speed + 1;
-        else word.y += this.speed;
+        if(word.isBonus) word.y += speed + 1;
+        else word.y += speed;
         // Remove the word from this.words array if it reaches the bottom
         if (word.y > this.canvas.getHeight()) { 
             this.words.splice(i,1);
@@ -170,10 +174,8 @@ GameController.prototype.executeFrameActions = function() {
         }
     }
 
-
-
     // Draw on the canvas
-    this.canvas.draw(this.words, this.player.score, this.player.lives, this.getPlayerWPM(), this.gameDifficulty.difficulty);
+    this.canvas.draw(this.words, this.player.score, this.player.lives, this.getPlayerWPM(), this.gameDifficulty.getCurrentLevel());
 
     // If the player lives is zero, end the game
     if(this.player.lives <= 0) this.stop(true);
@@ -197,7 +199,7 @@ GameController.prototype.updateHighlightInd = function() {
  * Add a random word to the words array
  */
 GameController.prototype.generateWord = function() {
-    let text = this.dictionary.getRandomWordForDifficulty(this.gameDifficulty.difficulty);
+    let text = this.dictionary.getRandomWordForDifficulty(this.gameDifficulty.getCurrentLevel());
     const textWidth = this.canvas.get2DContext().measureText(text).width;
 
     // Give left and right padding to prevent words from overlaping with UI components
@@ -208,7 +210,11 @@ GameController.prototype.generateWord = function() {
 
     // Every 100th word is a bonus word
     if(this.numWordsSpawned % 100 == 0 && this.numWordsSpawned > 0) {
-        let level = this.gameDifficulty.difficulty == 5 ? 5 : this.gameDifficulty.difficulty + 1;
+        let level =
+            this.gameDifficulty.getCurrentLevel() < this.gameDifficulty.getMaxLevel() 
+            ? this.gameDifficulty.getCurrentLevel() + 1
+            : this.gameDifficulty.getCurrentLevel();
+
         text = this.dictionary.getRandomWordForDifficulty(level);
         this.words.push(new Word(text, x, true));
     } else {
