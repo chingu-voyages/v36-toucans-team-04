@@ -1,15 +1,11 @@
 const diffs = document.querySelector("#difficulties");
 const canvasHeight = 300;
 const canvasWidth = 150;
-let canvases = [
-    { wpm: 30, setting2: 10, setting3: 50 },
-    { wpm: 45, setting2: 20, setting3: 40 },
-    { wpm: 60, setting2: 30, setting3: 30 },
-    { wpm: 75, setting2: 40, setting3: 20 },
-    { wpm: 90, setting2: 50, setting3: 10 },
-];
+// Auxiliar object to access  parameters of each difficulty
+const gameDifficulty = new GameDifficulty();
+let difficulties = gameDifficulty.parameters; 
 
-canvases.forEach((cnvs,index) => {
+difficulties.forEach((difficulty,index) => {
 	let canvas = document.createElement('canvas')
 	let canvasNum = index + 1
 	let ctx = canvas.getContext('2d')
@@ -19,7 +15,7 @@ canvases.forEach((cnvs,index) => {
 	ctx.font = '3em Arial'
 	ctx.fillStyle = '#FF0000'
 	ctx.fillText('Difficulty ' + canvasNum, 5, 35)
-	ctx.fillText('WPM: ' + cnvs.wpm, 5, 65)
+	ctx.fillText('WPM: ' + difficulty.wpm, 5, 65)
 	diffs.appendChild(canvas)
 
 	canvas.addEventListener("click", () => {
