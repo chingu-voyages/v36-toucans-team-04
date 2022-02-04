@@ -108,7 +108,10 @@ GameController.prototype.stop = function(fireEvent) {
     this.timer.stop();
 
     // Fire gameover event
-    if(fireEvent) $(window).trigger("gameover");
+    if (fireEvent){
+        this.sounds.gameOver.play();
+        $(window).trigger("gameover");
+    }
 }
 
 /**
@@ -180,7 +183,10 @@ GameController.prototype.executeFrameActions = function() {
         // Remove the word from this.words array if it reaches the bottom
         if (word.y > this.canvas.getHeight()) { 
             this.words.splice(i,1);
-            if(!word.isBonus) this.player.missWord();
+            if (!word.isBonus) {
+                this.sounds.liveLost.play();
+                this.player.missWord();
+            }
             this.updateTextBox();
         }
     }
