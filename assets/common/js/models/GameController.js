@@ -67,6 +67,9 @@ GameController.prototype.start = function(difficultyLevel = 1) {
     this.difficultyLevelIntervalId = window.setInterval(() => {
         this.gameDifficulty.increase();
 
+        // Send message to the Interface script (game.js) that player leveled up
+        $(window).trigger("levelup", [this.gameDifficulty.getCurrentLevel()]);
+
         // Reset the word generation interval with the new WPM
         window.clearInterval(this.wordGenerationIntervalId);
         this.wordGenerationIntervalId = wordGenerationFn();

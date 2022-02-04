@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Tourney&display=swap');
+
 body {
     width: 100vw;
     height: 100vh;
@@ -10,6 +12,22 @@ body {
 
 #back-button-container {
     display: inline-block;
+}
+
+#level-up-alert {
+    font-family: 'Tourney', cursive;
+    font-size: 2em;
+    text-transform: uppercase;
+    color: yellow;
+    position: absolute;
+    top: 5px;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    width: 4em;
+    padding: 0;
+    display: none;
+    --animate-duration: 2s;
 }
 
 #end-game-button-container {

@@ -66,6 +66,16 @@ $(window).on("gameover", () => {
     displayGameOverModal();
 });
 
+$(window).on("levelup", (e, currentLevel) => {
+    $("#level-up-alert span").text(currentLevel);
+    $("#level-up-alert").show();
+
+    // After 4 seconds, hide the banner
+    setTimeout(() => {
+        $("#level-up-alert").hide();
+    }, 4000);
+});
+
 /**
  * Display the Game Over modal
  */
