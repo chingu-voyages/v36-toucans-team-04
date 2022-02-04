@@ -7,6 +7,7 @@ function GameController() {
     this.gameInProgress = false;
     this.words = [];
     this.userInputText = "";
+    this.sounds = new Sounds();
 
     this.wordGenerationIntervalId = null;
     this.difficultyLevelIntervalId = null;
@@ -65,7 +66,10 @@ GameController.prototype.start = function(difficultyLevel = 1) {
 
     // Set the difficulty level increase interval
     this.difficultyLevelIntervalId = window.setInterval(() => {
-        this.gameDifficulty.increase();
+
+        if (this.gameDifficulty.increase()) {
+            this.sounds.levelBeaten.play();
+        }
 
         // Send message to the Interface script (game.js) that player leveled up
         $(window).trigger("levelup", [this.gameDifficulty.getCurrentLevel()]);
@@ -118,9 +122,13 @@ GameController.prototype.enterWord = function() {
     let wordToType = this.words.find(word => word.highlightInd === word.text.length); // Find a word that has been typed
     let wordToTypeInd = this.words.indexOf(wordToType); // Retrieve index to splice without a second loop
     if (wordToType) { // If a successfully typed word is found
+        wordToType.isBonus
+            ? this.sounds.bonusWord.play()
+            : this.sounds.correctWord.play();
         this.player.enterWord(wordToType);
         this.words.splice(wordToTypeInd, 1);
     } else {
+        this.sounds.incorrectWord.play();
         const match = this.findBestWordMatch();
 
         // Record the player's correct/incorrect number of characters
@@ -220,6 +228,7 @@ GameController.prototype.generateWord = function() {
 
         text = this.dictionary.getRandomWordForDifficulty(level);
         this.words.push(new Word(text, x, true));
+        this.sounds.bonusWordSpawns.play();
     } else {
         this.words.push(new Word(text, x));
     }
