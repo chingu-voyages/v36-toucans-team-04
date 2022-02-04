@@ -1,7 +1,6 @@
 function CanvasDummy() {
     this.element = document.getElementById("canvas");
     this.image = new Image(40, 40);
-
     // Load the Heart image to represent the lives
     this.image.src = "./assets/images/heart.png";
 }
@@ -9,14 +8,14 @@ function CanvasDummy() {
 /**
  * Draw game components on the canvas. This function is to be called for every frame
  * @param {Word[]} words 
- * @param {number} score 
- * @param {number} lives 
+ * @param {number} speed 
+ * @param {number} capWordProb 
  * @param {number} wpm 
  * @param {number} difficulty 
  */
-CanvasDummy.prototype.draw = function(words, score, lives, wpm, difficulty) {
+CanvasDummy.prototype.draw = function(words, speed, capWordProb, wpm, difficulty, maxWordLength) {
     this.clear();
-    const ctx = this.get2DContext(), rightPadding = 200, heartDimension = 30;
+    const ctx = this.get2DContext(), rightPadding = 250, heartDimension = 30;
 
     ctx.fillStyle = "red";
     ctx.font = "1.5rem Arial";
@@ -24,24 +23,17 @@ CanvasDummy.prototype.draw = function(words, score, lives, wpm, difficulty) {
     // Draw the difficulty
     ctx.fillText("Difficulty: " + difficulty, 10, 55);
 
-    // Draw the score
-    ctx.fillText("Score: " + score, this.element.width - rightPadding, 55);
+    // Draw the speed
+    ctx.fillText("Speed: " + speed, this.element.width - rightPadding, 55);
 
-    // Draw WPM - 2 Decimal Places
-    ctx.fillText("WPM: " + wpm.toFixed(2), this.element.width - rightPadding, 80);
+    // Draw WPM 
+    ctx.fillText("WPM: " + wpm, this.element.width - rightPadding, 80);
     
-    let heartYPos = 125, heartXPos = this.element.width - rightPadding;
-
-    // Draw the lives
-    for(let i = 0; i < lives; i++) {
-        // For every 5 lives, start drawing on the next row to prevent overflow
-        if(i % 5 == 0) {
-            heartYPos = 125 + heartDimension * i / 5;
-            heartXPos = this.element.width - rightPadding;
-        }
-        ctx.drawImage(this.image, heartXPos, heartYPos, heartDimension, heartDimension);
-        heartXPos += heartDimension;
-    }
+    // Draw capWordProb 
+    ctx.fillText("capWordProb: " + capWordProb, this.element.width - rightPadding, 105);
+    
+    // Draw maxWordLength 
+    ctx.fillText("maxWordLength: " + maxWordLength, this.element.width - rightPadding, 130);
 
     // Draw the words on the screen
     for(word of words) {

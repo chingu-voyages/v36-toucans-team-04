@@ -10,6 +10,7 @@ function GameControllerDummy() {
 
     this.wordGenerationIntervalId = null;
     this.difficultyLevelIntervalId = null;
+    this.frameIntervalId = null;
 
     this.numWordsSpawned = 0;
 }
@@ -41,6 +42,7 @@ GameControllerDummy.prototype.reset = function() {
  * Start the game.
  */
 GameControllerDummy.prototype.start = function(difficultyLevel = 1) {
+    console.log("game started");
     this.gameInProgress = true;
 
     /*
@@ -48,13 +50,15 @@ GameControllerDummy.prototype.start = function(difficultyLevel = 1) {
      * It is filled before the beginning of the game in order to achieve a smooth 
      * transition between difficulties while the game is in progress.
      */
-    this.dictionary.initialize();
+    if (this.dictionary.subDictionary.length == 0) this.dictionary.initialize();
 
     // Initialize difficulty
     this.gameDifficulty.setCurrentLevel(difficultyLevel);
 
     // Function that sets Word Generation Interval
     const wordGenerationFn = () => {
+
+        this.generateWord();
         return window.setInterval(() => { 
             this.generateWord(); }, 60000 / this.gameDifficulty.getWPM()
         );
@@ -63,24 +67,15 @@ GameControllerDummy.prototype.start = function(difficultyLevel = 1) {
     // Set the word generation interval
     this.wordGenerationIntervalId = wordGenerationFn();
 
-    // Set the difficulty level increase interval
-    this.difficultyLevelIntervalId = window.setInterval(() => {
-        this.gameDifficulty.increase();
-
-        // Reset the word generation interval with the new WPM
-        window.clearInterval(this.wordGenerationIntervalId);
-        this.wordGenerationIntervalId = wordGenerationFn();
-    }, 60000);
-
     // Start the game frame request
-    window.requestAnimationFrame(() => { frameFn(); });
+    this.frameIntervalId = window.requestAnimationFrame(() => { frameFn(); });
 
     // Make sure to use the arrow function here to make the current context accessible inside the nested function.
     const frameFn = () => {
         this.executeFrameActions();
 
         // Recursively call the frameFn function to keep the frame request going as long as the game is in progress
-        if(this.gameInProgress) window.requestAnimationFrame(frameFn);
+        if(this.gameInProgress) this.frameIntervalId = window.requestAnimationFrame(frameFn);
     }
 
     this.timer.start();
@@ -94,6 +89,8 @@ GameControllerDummy.prototype.stop = function(fireEvent) {
     // Clear the word generation interval
     window.clearInterval(this.wordGenerationIntervalId);
     window.clearInterval(this.difficultyLevelIntervalId);
+    window.cancelAnimationFrame(this.frameIntervalId);
+    console.log("Intervals cleared");
     this.wordGenerationIntervalId = null;
     this.difficultyLevelIntervalId = null;
 
@@ -112,7 +109,6 @@ GameControllerDummy.prototype.executeFrameActions = function() {
     for(let i = this.words.length-1 ; i >= 0 ; --i) {
         let word = this.words[i];
         let speed = this.gameDifficulty.getSpeed();
-
         // Bonus word moves down quicker than normal words
         if(word.isBonus) word.y += speed + 1;
         else word.y += speed;
@@ -125,7 +121,7 @@ GameControllerDummy.prototype.executeFrameActions = function() {
     }
 
     // Draw on the canvas
-    this.canvas.draw(this.words, this.player.score, this.player.lives, this.gameDifficulty.getWPM(), this.gameDifficulty.getCurrentLevel());
+    this.canvas.draw(this.words, this.gameDifficulty.getSpeed(), this.gameDifficulty.getCapWordProb(), this.gameDifficulty.getWPM(), this.gameDifficulty.getCurrentLevel(), this.gameDifficulty.getMaxWordLength());
 
     // If the player lives is zero, end the game
     // if(this.player.lives <= 0) this.stop(true);
@@ -160,3 +156,5 @@ GameControllerDummy.prototype.generateWord = function() {
     this.numWordsSpawned ++;
     // this.updateTextBox(); // Updates the text box when a new word is added
 }
+
+
