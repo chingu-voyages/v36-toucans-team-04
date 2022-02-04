@@ -130,9 +130,14 @@ GameDifficulty.prototype.getCapWordProb = function () {
 
 /**
  * Increase the game difficulty by one level until reaching the max level
+ * @returns {bool} whether or not it was possible to increase difficulty level 
  */
 GameDifficulty.prototype.increase = function() {
-    if(this.getCurrentLevel() < this.getMaxLevel()) this.difficulty ++;
+    if (this.getCurrentLevel() < this.getMaxLevel()) {
+        this.difficulty ++;
+        return true;
+    }
+    return false;
 }
 
 

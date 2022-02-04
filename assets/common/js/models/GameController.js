@@ -7,6 +7,7 @@ function GameController() {
     this.gameInProgress = false;
     this.words = [];
     this.userInputText = "";
+    this.soundController = new SoundController();
 
     this.wordGenerationIntervalId = null;
     this.difficultyLevelIntervalId = null;
@@ -65,7 +66,10 @@ GameController.prototype.start = function(difficultyLevel = 1) {
 
     // Set the difficulty level increase interval
     this.difficultyLevelIntervalId = window.setInterval(() => {
-        this.gameDifficulty.increase();
+
+        if (this.gameDifficulty.increase()) {
+            this.soundController.play("level-beaten");
+        }
 
         // Send message to the Interface script (game.js) that player leveled up
         $(window).trigger("levelup", [this.gameDifficulty.getCurrentLevel()]);
@@ -102,9 +106,13 @@ GameController.prototype.stop = function(fireEvent) {
 
     this.gameInProgress = false;
     this.timer.stop();
+    this.soundController.stop();
 
     // Fire gameover event
-    if(fireEvent) $(window).trigger("gameover");
+    if (fireEvent){
+        this.soundController.play("game-over");
+        $(window).trigger("gameover");
+    }
 }
 
 /**
@@ -118,9 +126,13 @@ GameController.prototype.enterWord = function() {
     let wordToType = this.words.find(word => word.highlightInd === word.text.length); // Find a word that has been typed
     let wordToTypeInd = this.words.indexOf(wordToType); // Retrieve index to splice without a second loop
     if (wordToType) { // If a successfully typed word is found
+        wordToType.isBonus
+            ? this.soundController.play("bonus-word")
+            : this.soundController.play("correct-word");
         this.player.enterWord(wordToType);
         this.words.splice(wordToTypeInd, 1);
     } else {
+        this.soundController.play("incorrect-word");
         const match = this.findBestWordMatch();
 
         // Record the player's correct/incorrect number of characters
@@ -172,7 +184,10 @@ GameController.prototype.executeFrameActions = function() {
         // Remove the word from this.words array if it reaches the bottom
         if (word.y > this.canvas.getHeight()) { 
             this.words.splice(i,1);
-            if(!word.isBonus) this.player.missWord();
+            if (!word.isBonus) {
+                this.soundController.play("live-lost");
+                this.player.missWord();
+            }
             this.updateTextBox();
         }
     }
@@ -220,6 +235,7 @@ GameController.prototype.generateWord = function() {
 
         text = this.dictionary.getRandomWordForDifficulty(level);
         this.words.push(new Word(text, x, true));
+        this.soundController.play("bonus-word-spawns");
     } else {
         this.words.push(new Word(text, x));
     }
