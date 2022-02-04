@@ -7,7 +7,7 @@ function GameController() {
     this.gameInProgress = false;
     this.words = [];
     this.userInputText = "";
-    this.sounds = new Sounds();
+    this.soundController = new SoundController();
 
     this.wordGenerationIntervalId = null;
     this.difficultyLevelIntervalId = null;
@@ -68,7 +68,7 @@ GameController.prototype.start = function(difficultyLevel = 1) {
     this.difficultyLevelIntervalId = window.setInterval(() => {
 
         if (this.gameDifficulty.increase()) {
-            this.sounds.levelBeaten.play();
+            this.soundController.play("level-beaten");
         }
 
         // Send message to the Interface script (game.js) that player leveled up
@@ -106,10 +106,11 @@ GameController.prototype.stop = function(fireEvent) {
 
     this.gameInProgress = false;
     this.timer.stop();
+    this.soundController.stop();
 
     // Fire gameover event
     if (fireEvent){
-        this.sounds.gameOver.play();
+        this.soundController.play("game-over");
         $(window).trigger("gameover");
     }
 }
@@ -126,12 +127,12 @@ GameController.prototype.enterWord = function() {
     let wordToTypeInd = this.words.indexOf(wordToType); // Retrieve index to splice without a second loop
     if (wordToType) { // If a successfully typed word is found
         wordToType.isBonus
-            ? this.sounds.bonusWord.play()
-            : this.sounds.correctWord.play();
+            ? this.soundController.play("bonus-word")
+            : this.soundController.play("correct-word");
         this.player.enterWord(wordToType);
         this.words.splice(wordToTypeInd, 1);
     } else {
-        this.sounds.incorrectWord.play();
+        this.soundController.play("incorrect-word");
         const match = this.findBestWordMatch();
 
         // Record the player's correct/incorrect number of characters
@@ -184,7 +185,7 @@ GameController.prototype.executeFrameActions = function() {
         if (word.y > this.canvas.getHeight()) { 
             this.words.splice(i,1);
             if (!word.isBonus) {
-                this.sounds.liveLost.play();
+                this.soundController.play("live-lost");
                 this.player.missWord();
             }
             this.updateTextBox();
@@ -234,7 +235,7 @@ GameController.prototype.generateWord = function() {
 
         text = this.dictionary.getRandomWordForDifficulty(level);
         this.words.push(new Word(text, x, true));
-        this.sounds.bonusWordSpawns.play();
+        this.soundController.play("bonus-word-spawns");
     } else {
         this.words.push(new Word(text, x));
     }
