@@ -33,6 +33,13 @@ $("#difficulties").hover(function() {
 	$(".canvas-example").addClass("animate__animated animate__bounceOutLeft");
 });
 
+// Hide the canvas element (Remove it from the content flow) after the bounce out animation
+$(".canvas-example").on("animationend", function(e) {
+	if(e.originalEvent.animationName == "bounceOutLeft") {
+		$(".canvas-example").hide();
+	}
+});
+
 $(".difficulty-selector").hover(function(){
 	startDemoForDifficulty(parseInt($(this).attr("id")));
 }, function() {
