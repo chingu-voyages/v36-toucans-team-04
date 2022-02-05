@@ -184,7 +184,7 @@ GameController.prototype.executeFrameActions = function() {
     for(let i = this.words.length-1 ; i >= 0 ; --i) {
         let word = this.words[i];
         // Bonus word moves down quicker than normal words
-        if(word.isBonus) word.y += speedFactor + 1;
+        if(word.isBonus) word.y += speedFactor * 1.50;
         else word.y += speedFactor;
         // Remove the word from this.words array if it reaches the bottom
         if (word.y > this.canvas.getHeight()) { 
