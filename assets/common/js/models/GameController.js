@@ -173,14 +173,19 @@ GameController.prototype.getPlayerWPM = function() {
  * Function to execute all operations in each frame
  */
 GameController.prototype.executeFrameActions = function() {
+    let speed = this.gameDifficulty.getSpeed();
+    /*
+     * Use math rule of three to calculate the speedFactor for current canvas height
+     * with a base height of 1080 pixels
+     */
+    const speedFactor = ( this.canvas.getHeight() * speed ) / 1080;
+
     // Move all the words down
     for(let i = this.words.length-1 ; i >= 0 ; --i) {
         let word = this.words[i];
-        let speed = this.gameDifficulty.getSpeed();
-
         // Bonus word moves down quicker than normal words
-        if(word.isBonus) word.y += speed + 1;
-        else word.y += speed;
+        if(word.isBonus) word.y += speedFactor + 1;
+        else word.y += speedFactor;
         // Remove the word from this.words array if it reaches the bottom
         if (word.y > this.canvas.getHeight()) { 
             this.words.splice(i,1);
