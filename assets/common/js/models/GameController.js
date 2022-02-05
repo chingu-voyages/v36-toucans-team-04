@@ -227,7 +227,7 @@ GameController.prototype.generateWord = function() {
     const x = Math.floor(Math.random() * (max - min) + min);
 
     // Every 100th word is a bonus word
-    if(this.numWordsSpawned % 100 == 0 && this.numWordsSpawned > 0) {
+    if(this.numWordsSpawned % 50 == 0 && this.numWordsSpawned > 0) {
         let level =
             this.gameDifficulty.getCurrentLevel() < this.gameDifficulty.getMaxLevel() 
             ? this.gameDifficulty.getCurrentLevel() + 1
