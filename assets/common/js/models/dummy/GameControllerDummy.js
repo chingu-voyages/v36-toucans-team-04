@@ -42,7 +42,7 @@ GameControllerDummy.prototype.reset = function() {
  * Start the game.
  */
 GameControllerDummy.prototype.start = function(difficultyLevel = 1) {
-    console.log("game started");
+    //console.log("game started");
     this.gameInProgress = true;
 
     /*
@@ -90,7 +90,7 @@ GameControllerDummy.prototype.stop = function(fireEvent) {
     window.clearInterval(this.wordGenerationIntervalId);
     window.clearInterval(this.difficultyLevelIntervalId);
     window.cancelAnimationFrame(this.frameIntervalId);
-    console.log("Intervals cleared");
+    //console.log("Intervals cleared");
     this.wordGenerationIntervalId = null;
     this.difficultyLevelIntervalId = null;
 
