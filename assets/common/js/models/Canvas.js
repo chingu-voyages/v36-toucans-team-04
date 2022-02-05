@@ -45,7 +45,7 @@ Canvas.prototype.draw = function(words, score, lives, wpm, difficulty) {
 
     // Draw the words on the screen
     for(word of words) {
-        let defaultTextColor = word.isBonus ? "blue" : "white";
+        let defaultTextColor = word.isBonus ? "#3db0ed" : "white";
 
         // Highlight the substring if the word is highlighted
         if(word.highlightInd > 0) {
