@@ -12,7 +12,7 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
 
-    height: 100vh;
+    min-height: 100vh;
     font-family: arial;
 }
 
@@ -45,6 +45,7 @@ h3 {
 }
 
 main {
+    margin: 3.5em auto;
     width: 30%;
     background: rgb(255, 255, 255, 0.8);
     padding: 1em;
