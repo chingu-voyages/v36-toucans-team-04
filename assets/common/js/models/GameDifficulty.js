@@ -12,82 +12,82 @@ function GameDifficulty() {
 
         // Difficulty 1
         {
-            wpm: 20,
-            speed: 1.5,
-            maxWordLength: 3,
-            capWordProb: 0,
+            wpm: 12,
+            speed: 0.6,
+            maxWordLength: 4,
+            capWordProb: 0.2,
         },
 
         // Difficulty 2
         {
-            wpm: 25,
-            speed: 1.6,
+            wpm: 17,
+            speed: 0.7,
             maxWordLength: 4,
-            capWordProb: 0,
+            capWordProb: 0.2,
         },
 
         // Difficulty 3
         {
-            wpm: 30,
-            speed: 1.7,
+            wpm: 22,
+            speed: 0.7,
             maxWordLength: 5,
-            capWordProb: 0,
+            capWordProb: 0.2,
         },
 
         // Difficulty 4
         {
-            wpm: 40,
-            speed: 1.8,
+            wpm: 27,
+            speed: 0.8,
             maxWordLength: 5,
-            capWordProb: 0.1,
+            capWordProb: 0.3,
         },
 
         // Difficulty 5
         {
-            wpm: 45,
-            speed: 1.9,
+            wpm: 33,
+            speed: 0.8,
             maxWordLength: 6,
-            capWordProb: 0.2,
+            capWordProb: 0.3,
         },
 
         // Difficulty 6
         {
-            wpm: 50,
-            speed: 2,
-            maxWordLength: 7,
-            capWordProb: 0.2,
+            wpm: 40,
+            speed: 0.8,
+            maxWordLength: 6,
+            capWordProb: 0.3,
         },
 
         // Difficulty 7
         {
-            wpm: 60,
-            speed: 2.1,
-            maxWordLength: 8,
-            capWordProb: 0.3,
+            wpm: 47,
+            speed: 0.9,
+            maxWordLength: 7,
+            capWordProb: 0.4,
         },
 
         // Difficulty 8
         {
-            wpm: 65,
-            speed: 2.2,
-            maxWordLength: 9,
+            wpm: 54,
+            speed: 0.9,
+            maxWordLength: 7,
             capWordProb: 0.4,
         },
 
         // Difficulty 9
         {
-            wpm: 70,
-            speed: 2.3,
-            maxWordLength: 10,
+            wpm: 61,
+            speed: 1.0,
+            maxWordLength: 8,
             capWordProb: 0.5,
         },
 
         // Difficulty 10
         {
-            wpm: 80,
-            speed: 2.5,
-            maxWordLength: 11,
-            capWordProb: 0.6
+            wpm: 68,
+            speed: 1.0,
+            maxWordLength: 8,
+            capWordProb: 0.5
         },
     ];
 }
