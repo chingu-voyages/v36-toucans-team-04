@@ -4,18 +4,46 @@
     border: 0;
 }
 
+:root {
+    --dark-wood-color: #815438;
+    --light-wood-color: #caa472;
+}
+
 body {
     background-image: url("../../images/background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
     height: 100vh;
     width: 100vw;
     display: flex;
     flex-flow: column;
+    overflow-x: hidden;
+}
+
+#menu-link {
+    font-family: "arial";
+    font-weight: bold;
+    background: var(--light-wood-color);
+    color: var(--dark-wood-color);
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    padding: 3px 10px;
+    text-decoration: none;
+    text-transform: uppercase;
+    border: 3px solid var(--dark-wood-color);
+    border-radius: 50px;
+}
+
+#menu-link:hover {
+    background: var(--dark-wood-color);
+    color: white;
 }
 
 #tutorial {
-    height: 50%;
+    height: 70%;
     width: 80%;
-    margin: 0 auto;
+    margin: 3em auto;
     background-color: rgba(0, 0, 0, 0.2);
     display: flex;
     align-items: center;
@@ -99,17 +127,96 @@ body {
 }
 
 #difficulties {
-    height: 50%;
+    height: 150px;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
 }
 
-canvas {
+.difficulty-selector {
+    flex: 0 0 150px;
+    background-color: var(--light-wood-color);
+    /* height: 100%; */
+    /* width: 100%; */
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.inner-difficulty-selector {
+    box-sizing: border-box;
+    font-family: 'Bungee', cursive;
+    font-size: 1.5em;
+    font-weight: 900;
+    border: 5px var(--dark-wood-color) solid;
+    border-radius: 100%;
+    color: var(--dark-wood-color);
+    height: 95%;
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.inner-difficulty-selector:hover {
+    border: 5px white solid;
+    /* color: white; */
+}
+
+.inner-difficulty-selector p{
+    text-align: center;
+}
+
+.canvas-example {
+    position: absolute;
+    left: 10%;
+    top: 3em;
+    /* transform: translate(-50%, 0%); */
+    /* transition: transform 0.5s ease-out; */
+    height: 70%;
+    width: 80%;
     background-color: #222222;
-    border: 5px solid #008800;
+    /* border: 5px var(--dark-wood-color) solid; */
 }
 
-canvas:hover {
-    background-color: #333333;
-    border: 5px solid #00ff00;
+.active {
+    /* transform: translate(-50%, 0%); */
+    top: 50%;
+}
+
+@media screen and (max-width: 1524px) {
+    #difficulties {
+        height: 100px;
+    }
+    .difficulty-selector {
+        flex: 0 0 100px;
+    }
+    .inner-difficulty-selector {
+        border: 4px var(--dark-wood-color) solid;
+    }
+}
+
+@media screen and (max-width: 1078px) {
+    #difficulties {
+        height: 80px;
+    }
+    .difficulty-selector {
+        flex: 0 0 80px;
+    }
+    .inner-difficulty-selector {
+        border: 3px var(--dark-wood-color) solid;
+    }
+}
+
+@media screen and (max-width: 843px) {
+    #difficulties {
+        height: 50px;
+    }
+    .difficulty-selector {
+        flex: 0 0 50px;
+    }
+    .inner-difficulty-selector {
+        border: 2px var(--dark-wood-color) solid;
+    }
 }

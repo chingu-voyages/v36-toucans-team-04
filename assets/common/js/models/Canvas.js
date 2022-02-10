@@ -19,13 +19,13 @@ Canvas.prototype.draw = function(words, score, lives, wpm, difficulty) {
     const ctx = this.get2DContext(), rightPadding = 250, heartDimension = 40;
 
     ctx.fillStyle = "red";
-    ctx.font = "2em Arial";
+    ctx.font = "2em Courier Prime";
 
     // Draw the difficulty
-    ctx.fillText("Difficulty: " + difficulty, 50, 25);
+    ctx.fillText("LEVEL: " + difficulty, 50, 25);
 
     // Draw the score
-    ctx.fillText("Score: " + score, this.element.width - rightPadding, 25);
+    ctx.fillText("SCORE: " + score, this.element.width - rightPadding, 25);
 
     // Draw WPM - 2 Decimal Places
     ctx.fillText("WPM: " + wpm.toFixed(2), this.element.width - rightPadding, 75);
@@ -45,7 +45,7 @@ Canvas.prototype.draw = function(words, score, lives, wpm, difficulty) {
 
     // Draw the words on the screen
     for(word of words) {
-        let defaultTextColor = word.isBonus ? "blue" : "white";
+        let defaultTextColor = word.isBonus ? "#3db0ed" : "white";
 
         // Highlight the substring if the word is highlighted
         if(word.highlightInd > 0) {

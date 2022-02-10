@@ -12,6 +12,9 @@
     <link rel="stylesheet" href="assets/lib/fontawesome-5.15.4/css/all.min.css">
     <link rel="stylesheet" href="assets/lib/bootstrap-4.6.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/common/css/game.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="modal" id="end-game-confirm-modal" tabindex="-1">
@@ -50,7 +53,7 @@
                         <div id="game-score" class="value"></div>
                     </div>
                     <div class="fieldset">
-                        <div class="label">Highest Difficulty Completed:</div>
+                        <div class="label">Highest Difficulty:</div>
                         <div id="game-highest-difficulty" class="value"></div>
                     </div>
                     <div class="fieldset">
@@ -115,6 +118,7 @@
                 <button id="end-game-button" type="button" class="btn btn-danger">End Game</button>
             </div>
         </nav>
+        <div id="level-up-alert" class="animate__animated animate__flash">Level <span></span>!</div>
         <canvas id="canvas">
             Your browser does not support canvas.
         </canvas>
@@ -125,12 +129,14 @@
 
     <script src="assets/lib/jquery-3.6.0/js/jquery-3.6.0.min.js"></script>
     <script src="assets/lib/bootstrap-4.6.1/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/lib/howler.js-2.2.3/js/howler.min.js"></script>
     <script src="assets/common/js/models/GameDifficulty.js"></script>
     <script src="assets/common/js/models/Dictionary.js"></script>
     <script src="assets/common/js/models/Word.js"></script>
     <script src="assets/common/js/models/Canvas.js"></script>
     <script src="assets/common/js/models/Player.js"></script>
     <script src="assets/common/js/models/Timer.js"></script>
+    <script src="assets/common/js/models/Sounds.js"></script>
     <script src="assets/common/js/models/GameController.js"></script>
     <script src="assets/common/js/game.js"></script>
 </body>

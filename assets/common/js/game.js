@@ -29,7 +29,7 @@ $(".restart-btn").on("click", function() {
     $("#text-display").html("");
     resetCanvasSize();
 
-    let playedDifficulty = gameController.gameDifficulty.difficulty;
+    let playedDifficulty = gameController.gameDifficulty.getCurrentLevel();
     gameController.reset();
     
     if($(this).attr("id") == "modal-restart-last-selected-btn") {
@@ -64,6 +64,16 @@ $(window).on("keydown", event => {
 // Gameover event has been triggered from the GameController
 $(window).on("gameover", () => {
     displayGameOverModal();
+});
+
+$(window).on("levelup", (e, currentLevel) => {
+    $("#level-up-alert span").text(currentLevel);
+    $("#level-up-alert").show();
+
+    // After 4 seconds, hide the banner
+    setTimeout(() => {
+        $("#level-up-alert").hide();
+    }, 4000);
 });
 
 /**
