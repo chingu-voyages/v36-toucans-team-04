@@ -14,15 +14,15 @@ This Javascript game was created for the Chingu Voyage 36. Our team wants to pro
 | Key Feature                                              | Status           |
 | -------------------------------------------------------- | ---------------- |
 | Landing Screen                                           | Complete         |
-| Tutorial Screen                                          | Work In Progress |
+| Tutorial Screen                                          | Complete         |
 | Falling words that player must type                      | Complete         |
 | A set number of chances that players can miss words      | Complete         |
 | Spawning of bonus word that can reward additional chance | Complete         |
-| Increasing difficulty level                              | Work In Progress |
-| Capability to select starting difficulty level           | Work In Progress |
-| GameOver screen with player's performance details        | Work In Progress |
-| Fun Facts about Typing                                   | Work In Progress |
-| Credits Screen                                           | Work In Progress |
+| Increasing difficulty level                              | Complete         |
+| Capability to select starting difficulty level           | Complete         |
+| GameOver screen with player's performance details        | Complete         |
+| Fun Facts about Typing                                   | Complete         |
+| Credits Screen                                           | Complete         |
 
 ## Running the Project
 This project does not have a backend server. To run this project locally, download it as a ZIP, unzip the project folder and open index.html.
